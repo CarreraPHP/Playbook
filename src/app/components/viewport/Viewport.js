@@ -11,8 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var angular2_1 = require('angular2/angular2');
 var Card_1 = require('../card/Card');
+var ChartService_1 = require('../../services/ChartService');
 var Viewport = (function () {
-    function Viewport() {
+    function Viewport(chartService) {
         console.log("This is a log generated with viewport...");
     }
     Viewport.prototype.onInit = function () { };
@@ -27,9 +28,10 @@ var Viewport = (function () {
         angular2_1.Component({
             selector: 'pb-viewport',
             templateUrl: 'app/components/viewport/Viewport.html',
-            directives: [Card_1.Card]
+            directives: [Card_1.Card],
+            providers: [ChartService_1.ChartService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [ChartService_1.ChartService])
     ], Viewport);
     return Viewport;
 })();

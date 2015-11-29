@@ -1,4 +1,4 @@
-<div class="card" (click)="" [attr.class]="item.internal.class">
+<div class="card" [attr.class]="item.internal.class">
     <div *ng-if="item.type == 'Activity'" class="title">
         <span class="fa fa-task"></span>
         <span>{{item.name}}</span>
@@ -10,7 +10,9 @@
                 <i *ng-if="item.type == 'End'" class="icon icon-flag-end x-large"></i>
             </div>
             <div>
-                <div class="medium special-title"><span ng-bind="item.name"></span></div>
+                <div class="medium special-title">
+                    <span>{{item.name}}</span>
+                </div>
                 <div class="small" [inner-html]="item.description"></div>
                 <!-- should create pipe '|' formattext -->
             </div>
@@ -19,6 +21,7 @@
     <div *ng-if="item.type == 'Activity'" class="content">
         {{item.description}}
     </div>
+    <!--
     <div *ng-if="item.type == 'Actor'" class="actors jfc-width-100">
         <div class="actor" *ng-for="actor in item.actors" id="{{actor.id}}">
             <div></div>
@@ -29,6 +32,8 @@
             </div>
         </div>
     </div>
+    -->
+    <!--
     <div class="options">
         <div *ng-for="subitem in item.options" id="{{subitem.id}}" 
             (mouseover)="highlightRelation(this, true)" 
@@ -39,4 +44,5 @@
             </div>
         </div>
     </div>
+    -->
 </div>
