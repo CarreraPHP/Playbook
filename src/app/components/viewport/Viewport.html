@@ -1,1 +1,9 @@
-<h1>{{name}} is working fine</h1>
+<div id="chartcanvas" style="right: 0;">
+    <div id="chartTitle" class="large mono bold">
+        <span>{{name}}</span>
+        <i class="icon icon-edit medium" (click)="editor.config.toggle()"></i>
+    </div>
+    <div id="chartscene">
+        <pb-card />
+    </div>
+</div>

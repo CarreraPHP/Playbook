@@ -10,28 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var angular2_1 = require('angular2/angular2');
-var Card_1 = require('../card/Card');
-var Viewport = (function () {
-    function Viewport() {
-        console.log("This is a log generated with viewport...");
+var Card = (function () {
+    function Card() {
     }
-    Viewport.prototype.onInit = function () { };
-    Viewport.prototype.onChanges = function (changes) {
-    };
-    Viewport.prototype.onDestroy = function () { };
-    __decorate([
-        angular2_1.Input('pb-name'), 
-        __metadata('design:type', String)
-    ], Viewport.prototype, "name");
-    Viewport = __decorate([
+    Card.prototype.onInit = function () { };
+    Card = __decorate([
         angular2_1.Component({
-            selector: 'pb-viewport',
-            templateUrl: 'app/components/viewport/Viewport.html',
-            directives: [Card_1.Card]
+            selector: 'pb-card',
+            templateUrl: 'app/components/card/Card.html'
         }), 
         __metadata('design:paramtypes', [])
-    ], Viewport);
-    return Viewport;
+    ], Card);
+    return Card;
 })();
-exports.Viewport = Viewport;
-//# sourceMappingURL=Viewport.js.map
+exports.Card = Card;
+//# sourceMappingURL=Card.js.map

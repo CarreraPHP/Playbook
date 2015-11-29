@@ -1,0 +1,547 @@
+/* 			*{
+				-webkit-font-smoothing:  subpixel-antialiased;
+			} */
+
+			html, body {
+				height: 100%;
+			}
+
+			body {
+				background-color: rgba(0, 0, 0, 0.8);
+				margin: 0;
+				font-family: "Arial", Helvetica, sans-serif;;
+				overflow: hidden;
+/*				background: radial-gradient(circle at 50% 75%, #3F4041, #1F1F1F); */
+				/* background: url(../images/alpha-bg-2x2.svg), radial-gradient(ellipse at 50% 50%, rgba(207,208,215,0.2) 42%, rgba(0, 0, 0, 0.4) 90%); */
+
+				/* background-blend-mode: multiply; */
+
+				background-color: #fff;
+}
+
+			#container, .container{
+				width:100%;
+				height: 100%;
+				position:relative;
+			}
+
+			#container > #scene2d{
+				top: 50%;
+				left: 10%;
+				position: absolute;
+				width:100%;
+				height: 100%;
+				z-index:5;
+			}
+
+			#container > #scene2d > div{
+				position:absolute;
+				-webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+				-moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+				-ms-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+				-o-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+				transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+/*				-webkit-animation-delay: 2s;  Chrome, Safari, Opera
+				animation-delay: 2s;*/
+			}
+
+			a {
+				color: rgba(131,113,106,1);
+			}
+
+			#info {
+				position: absolute;
+				width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				font-weight: bold;
+				text-align: center;
+				z-index: 1;
+			}
+
+			#menu {
+				position: absolute;
+				bottom: 20px;
+				width: 100%;
+				text-align: center;
+			}
+                        
+                        .highlight-node{
+                            opacity: 1 !important;
+                        }
+
+                        .arrow-tail, .arrow-straight-tail{
+                            background: blue !important;
+                            height: 13px;
+                            width: 5px;
+                            position: absolute;
+                            bottom: -8px;
+                        }
+                        
+                        .arrow-head{
+                            position: absolute;
+                            right: 2px;                            
+                            height: 34px;
+                            width: 10px;
+                            overflow: hidden;
+                        }
+                        
+                        .arrow-head div{
+                            height: 15px;
+                            width: 15px;
+                            position: absolute;
+                            border: 3px solid blue !important;
+                            right: 4px;
+                            transform: rotate(45deg);
+                            top: 0px;
+                        }
+                        
+                        .arrow-reverse .arrow-tail{
+                            bottom: none;
+                            top:-8px;
+                        }
+                        
+                        .arrow .arrow-head{
+                            top: -12px;
+                        }
+                        
+                        .arrow-reverse .arrow-head{
+                            bottom: -25px;
+                            right:1px;
+                        }
+                        
+                        .arrow-straight .arrow-head{
+                            bottom: -25px;
+                            right:-1px;
+                        }
+                        
+                        .arrow .arrow-straight-tail, .arrow-reverse .arrow-straight-tail{
+                            display: none;
+                        }
+
+			.arrow, .arrow-reverse, .arrow-straight {
+				cursor: default;
+				position: absolute;
+ 				display:block; 
+				line-height: 11px;
+				font-size: 9px;
+				background-color: transparent;
+				color: #222;
+                                opacity: 0.2;
+				/*overflow: hidden;*/
+			}
+
+			.arrow.highlight-node, .arrow-reverse.highlight-node, .arrow-straight.highlight-node{
+				z-index:5;
+                                display:block;
+			}
+
+			.arrow.highlight-node div, .arrow-reverse.highlight-node div, .arrow-straight.highlight-node div{
+				border-color: #ED1C24 !important;
+			}
+                        
+                        .arrow.highlight-node .arrow-tail, .arrow-reverse.highlight-node .arrow-tail, .arrow-straight.highlight-node .arrow-straight-tail{
+				background: #ED1C24 !important;
+			}
+                        
+                        .arrow > div, .arrow > div:nth-child(2) > div,
+                        .arrow-reverse > div, .arrow-reverse > div:nth-child(2) > div,
+                        .arrow-straight > div{
+                            position:absolute;
+                        }
+
+                        .arrow > div:nth-child(1){				
+				border-bottom: 3px solid blue;
+				/* border-right: 3px solid blue; */
+				bottom: 0px;
+				left: 0px;
+				width: 40%;
+				height: 50%;
+				border-bottom-right-radius: 6px;
+			}
+                        
+                        .arrow > div:nth-child(2),
+                        .arrow-reverse > div:nth-child(2){
+                            top:0;
+                            bottom: 0;
+                            left:calc(40% - 6px);
+                            width: 12px;
+                        }
+
+                        .arrow > div:nth-child(2) > div:nth-child(1){
+                            border-top: 3px solid blue;
+                            border-left: 3px solid blue;
+                            top:0;
+                            /* bottom: 0px; */				
+                            right: -3px;				
+                            width: 6px;				
+                            height: 60%;
+                            border-top-left-radius: 6px;
+                        }
+                        
+			.arrow > div:nth-child(2) > div:nth-child(2){
+				border-bottom: 3px solid blue;
+				border-right: 3px solid blue;
+				bottom: 0;
+				bottom: 0;
+				right: 3px;
+				width: 6px;
+				height: 60%;
+				border-bottom-right-radius: 6px;
+			}
+                        
+                        .arrow-reverse > div:nth-child(2) > div:nth-child(1){
+                            border-bottom: 3px solid blue;
+                            border-left: 3px solid blue;
+                            /* top:0; */
+                            bottom: 0px;				
+                            right: -3px;				
+                            width: 6px;				
+                            height: 60%;
+                            border-bottom-left-radius: 6px;
+                        }
+                        
+			.arrow-reverse > div:nth-child(2) > div:nth-child(2){
+				border-top: 3px solid blue;
+				border-right: 3px solid blue;
+				top: 0;
+				/* bottom: 0; */
+				right: 3px;
+				width: 6px;
+				height: 60%;
+				border-top-right-radius: 6px;
+			}
+                        
+                        .arrow > div:nth-child(3){
+				border-top: 3px solid blue;
+				/* border-left: 3px solid blue; */
+				top:0;
+				right: -3px;
+				width: 60%;
+				height: 50%;
+				border-top-left-radius: 6px;
+			}
+
+			.arrow-reverse > div:nth-child(1){
+				position:absolute;
+				border-top: 3px solid blue;
+				/* border-right: 3px solid blue; */
+				top: 0px;
+				left: 0px;
+				width: 40%;
+				height: 50%;
+				border-top-right-radius: 6px;
+			}
+
+			.arrow-reverse > div:nth-child(3){
+				position:absolute;
+				border-bottom: 3px solid blue;
+				/* border-left: 3px solid blue; */
+				bottom: 0;
+				right: -2px;
+				width: 60%;
+				height: 60%;
+				border-bottom-left-radius: 6px;
+			}
+
+			.arrow-straight > div:nth-child(3){
+				border-bottom: 3px solid blue;
+				width: 100% !important;
+				top: 0%;
+                        }
+
+			.arrow-straight > div:nth-child(1),
+                        .arrow-straight > div:nth-child(2){
+				display:none;
+			}
+
+			.card {
+				width: 220px;
+/* 				height: 400px; */
+				box-shadow: 0px 0px 12px rgba(250,250,250,0.125);
+				border-radius: 6px 0px 0px 6px;
+				border: 1px solid rgb(128, 128, 128); /*rgba(163, 161, 166, 1)*/
+				text-align: left;
+				cursor: default;
+				display:table;
+				line-height: 16px;
+				font-size: 14px;
+				font-weight: bold;
+				background-color: rgba(255, 255, 255, 1);
+				color: rgb(72, 85, 99);
+/* 				rgba(131,113,106,1); */
+				text-shadow: 0 0 10px rgba(160,108,78,0.2);
+				overflow:hidden;
+			
+				z-index: 10;
+				position: relative;
+}
+
+			.card:hover, .card.highlight-node {
+				box-shadow: 0px 0px 12px rgba(0,0,0,1);
+/* 			 	border: 3px solid rgba(163, 161, 166, 1); */
+			}
+
+			.card .content {
+				height: 70%;
+				/* font-size: 14px; */
+				font-weight: normal;
+				padding: 4%;
+				display: table;
+				text-align: justify;
+				width: 90%;
+				word-break: break-all;
+}
+
+			.card .title {
+				border-bottom: 1px solid rgb(128, 128, 128);
+				vertical-align: middle;
+				display: table;
+				padding: 4%;
+				background-color: rgb(39, 142, 252);
+				color: #fff;
+				font: normal bold 16px/1 "Arial";
+				width: 100%;
+                                word-break: break-all;
+			}
+
+			.fa{
+				font: normal normal normal 21px/1 FontAwesome;
+/* 				color:#FAFAD2; */
+				padding-right: 10px;
+				text-align:right;
+
+			}
+
+			.fa-task:before{
+				content: "\f0ae";
+			}
+
+			.fa-user:before{
+				content: "\f007";
+			}
+
+			.fa-play:before{
+				content: "\f144";
+			}
+
+			.card .options {
+				display: table;
+				width: 100%;
+			}
+
+			.options > div {
+				display:table;
+				width: 100%;
+			}
+
+			.options > div > div{
+				vertical-align: middle;
+				display: table-row;
+				padding: 3%;
+				font-weight: normal;
+			}
+
+			.options > div > div > span{
+				border-top: 1px solid rgb(128, 128, 128);
+				padding: 4%;
+				display: table-cell;
+				vertical-align:middle;
+                                word-break: break-all;
+			}
+
+			.options > div > div {
+				background-color: #FAFAD2;
+			}
+
+			.options > div > div:hover {
+				background-color: rgba(255, 255, 255, 0.25);
+			}
+
+			button {
+				/* color: rgba(127,255,255,0.75); */
+				background: transparent;
+				/* outline: 1px solid rgba(127,255,255,0.75); */
+				border: 0px;
+				padding: 5px 10px;
+				cursor: pointer;
+			}
+			button:hover {
+				/* background-color: rgba(0,255,255,0.5); */
+
+				/*color: #fff;*/
+}
+			button:active {
+				color: #000000;
+				/* background-color: rgba(0,255,255,0.75); */
+			}
+
+
+.arrow-flip {
+    transform: rotateY(180deg);
+}
+
+.actors {
+    display: table;
+    /* padding: 10px; */
+}
+
+.actor{
+    display:table-row;
+    /* width: 100%; */
+}
+
+.actor > div {    
+    display:table-cell;
+    border-top: 1px solid #ccc;
+}
+
+.actor > div:nth-child(1){
+    width:50px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.actor > div:nth-child(1):before {
+    content: '\f007';
+    font: normal normal normal 36px/1 FontAwesome;
+    color: rgb(39, 142, 252);
+    width: 40px;
+}
+
+.actor > div > div {
+    padding: 2px 2px;
+    word-break: break-word;
+}
+
+div#chartDetail {
+    position: absolute;
+    border: 1px solid #ccc;
+    min-height: 35px;
+    width: calc(100% - 10px);
+    margin: 10px 5px;
+    bottom: 0;
+    box-shadow: 0px 4px 10px #ccc;
+    background: rgba(255,255,255,0.9);
+    z-index: 25;
+}
+
+.icon-collapse {
+    /* position: absolute; */
+    /* right: 5px; */
+    /* top: 5px; */
+    /* margin: 0 !important; */
+    /* height: 35px; */
+    font-size: 30px;
+    /* line-height: 25px !important; */
+    padding: 0 5px !important;
+    /* width: 15px; */
+}
+
+.icon.icon-collapse:before {
+    content: '\f066';
+}
+
+.icon.icon-expand:before {
+    content: '\f065';
+}
+
+.opaque-node .card {
+    opacity: 0.3;
+}
+
+.opaque-node .arrow, .opaque-node .arrow-reverse, .opaque-node .arrow-straight {
+    opacity: 0.0;
+}
+
+.customise-tool {
+    width: 260px;
+    height: 160px;
+    position: absolute;
+    top: -34px;
+    right: -34px;
+}
+
+.customise-tool > div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #F2F2F2;
+    border: 1px solid #CCC;
+    min-height: 74px;
+    z-index: 10;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.card-holder {
+    /* padding: 0 0 20px 0; */
+}
+
+.customise-tool button:nth-child(3) {
+    right: 35px;
+    top: 0;
+}
+
+.customise-tool button:nth-child(4) {
+    right: 70px;
+    top: 0;
+}
+
+.customise-tool button:nth-child(5) {
+    right: 105px;
+    top: 0;
+}
+
+.customise-tool button {
+    position: absolute;
+    height: 35px;
+    width: 35px;
+}
+
+.customise-tool button:nth-child(1) {
+    right: 0;
+    top: 35px;
+}
+
+.customise-tool button:nth-child(2) {
+    top: 0;
+    right: 0;
+}
+
+.card-special {
+    display: table;
+    width: 100%;
+}
+
+.card-special > div {
+    display: table-row;
+}
+
+.card-special > div > div {
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    padding: 10px 0;
+}
+
+.card-special > div > div:nth-child(1) {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.special-title {
+    margin-bottom: 5px;
+}
+
+.card-info {
+    position: absolute;
+    top: 0;
+    line-height: 35px;
+    right: 90px;
+    width: 160px;
+    /* border: 1px solid; */
+    font-size: 9px;
+}
