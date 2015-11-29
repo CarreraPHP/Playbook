@@ -1,2 +1,12 @@
 <h1>Playbook application</h1>
-<pb-viewport [pb-name]="'Viewport 1234'"></pb-viewport>
+<pb-viewport [pb-name]="'Viewport 1234'">
+	<div id="jfc-load-screen" (click)="application.slider.animated = false;" ng-show="pageLoading">
+		<div class="jfc-loader-overlay"></div>
+		<div class="jfc-loader">
+			<div style="background:#FFF;padding-bottom:10px;">
+				Loading...
+			</div>
+			<img src="resources/images/loading.gif">
+		</div>
+	</div>
+</pb-viewport>
