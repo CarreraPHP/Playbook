@@ -1,4 +1,4 @@
-import { BrowserDomAdapter } from 'angular2/src/core/dom/browser_adapter';
+import { BrowserDomAdapter } from 'angular2/src/platform/browser/browser_adapter';
 import { document, window } from 'angular2/src/facade/browser';
 import { NumberWrapper, isBlank } from 'angular2/src/facade/lang';
 import { BaseException } from 'angular2/src/facade/exceptions';
@@ -39,4 +39,3 @@ export function windowProfile(name) {
 export function windowProfileEnd(name) {
     window.console.profileEnd(name);
 }
-//# sourceMappingURL=benchmark_util.js.map

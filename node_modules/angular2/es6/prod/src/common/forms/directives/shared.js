@@ -41,9 +41,6 @@ function _throwError(dir, message) {
     var path = dir.path.join(" -> ");
     throw new BaseException(`${message} '${path}'`);
 }
-export function setProperty(renderer, elementRef, propName, propValue) {
-    renderer.setElementProperty(elementRef, propName, propValue);
-}
 export function composeValidators(validators) {
     return isPresent(validators) ? Validators.compose(validators.map(normalizeValidator)) : null;
 }
@@ -90,4 +87,3 @@ export function selectValueAccessor(dir, valueAccessors) {
     _throwError(dir, "No valid value accessor for");
     return null;
 }
-//# sourceMappingURL=shared.js.map

@@ -1,4 +1,4 @@
-<div class="card" [attr.class]="item.internal.class">
+<div [class.card]="item.internal.classes.card">
     <div *ng-if="item.type == 'Activity'" class="title">
         <span class="fa fa-task"></span>
         <span>{{item.name}}</span>
@@ -21,9 +21,9 @@
     <div *ng-if="item.type == 'Activity'" class="content">
         {{item.description}}
     </div>
-    <!--
+    
     <div *ng-if="item.type == 'Actor'" class="actors jfc-width-100">
-        <div class="actor" *ng-for="actor in item.actors" id="{{actor.id}}">
+        <div class="actor" *ng-for="#actor of item.actors" id="{{actor.id}}">
             <div></div>
             <div>
                 <div class="medium">{{actor.name}}</div>
@@ -32,17 +32,16 @@
             </div>
         </div>
     </div>
-    -->
-    <!--
+    
     <div class="options">
-        <div *ng-for="subitem in item.options" id="{{subitem.id}}" 
+        <div *ng-for="#option of item.options" id="{{option.id}}" 
             (mouseover)="highlightRelation(this, true)" 
             (mouseleave)="highlightRelation(this, false)">
             <div>
-                <span class="jfc-width-80">{{subitem.name}}</span>
+                <span class="jfc-width-80">{{option.name}}</span>
                 <span class="jfc-width-20 fa fa-play"></span>
             </div>
         </div>
     </div>
-    -->
+    
 </div>

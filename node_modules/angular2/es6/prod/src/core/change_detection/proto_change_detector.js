@@ -211,6 +211,10 @@ class _ConvertAstIntoProtoRecords {
         var args = ast.expressions.map(e => e.visit(this));
         return this._addRecord(RecordType.Chain, "chain", null, args, null, 0);
     }
+    visitQuote(ast) {
+        throw new BaseException(`Caught uninterpreted expression at ${ast.location}: ${ast.uninterpretedExpression}. ` +
+            `Expression prefix ${ast.prefix} did not match a template transformer to interpret the expression.`);
+    }
     _visitAll(asts) {
         var res = ListWrapper.createFixedSize(asts.length);
         for (var i = 0; i < asts.length; ++i) {
@@ -369,4 +373,3 @@ function _interpolationFn(strings) {
             throw new BaseException(`Does not support more than 9 expressions`);
     }
 }
-//# sourceMappingURL=proto_change_detector.js.map

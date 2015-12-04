@@ -1,10 +1,8 @@
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
-    switch (arguments.length) {
-        case 2: return decorators.reduceRight(function(o, d) { return (d && d(o)) || o; }, target);
-        case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
-        case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
-    }
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
@@ -14,21 +12,27 @@ var Card_1 = require('../card/Card');
 var ChartService_1 = require('../../services/ChartService');
 var Viewport = (function () {
     function Viewport(chartService) {
-        console.log("This is a log generated with viewport...");
+        this.chartService = chartService;
+        // debugger;
+        // chartService.add();
+        this.items = chartService.getAll();
+        console.log("This is a log generated with viewport...", this.items);
     }
-    Viewport.prototype.onInit = function () { };
-    Viewport.prototype.onChanges = function (changes) {
+    Viewport.prototype.ngOnInit = function () {
+        console.log("viewport : initialised");
     };
-    Viewport.prototype.onDestroy = function () { };
+    Viewport.prototype.ngOnChanges = function (changes) {
+    };
+    Viewport.prototype.ngOnDestroy = function () { };
     __decorate([
         angular2_1.Input('pb-name'), 
         __metadata('design:type', String)
-    ], Viewport.prototype, "name");
+    ], Viewport.prototype, "name", void 0);
     Viewport = __decorate([
         angular2_1.Component({
             selector: 'pb-viewport',
             templateUrl: 'app/components/viewport/Viewport.html',
-            directives: [Card_1.Card],
+            directives: [Card_1.Card, angular2_1.CORE_DIRECTIVES],
             providers: [ChartService_1.ChartService]
         }), 
         __metadata('design:paramtypes', [ChartService_1.ChartService])

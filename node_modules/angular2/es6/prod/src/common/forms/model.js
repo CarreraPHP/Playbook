@@ -93,8 +93,8 @@ export class AbstractControl {
             this._runAsyncValidator(emitEvent);
         }
         if (emitEvent) {
-            ObservableWrapper.callNext(this._valueChanges, this._value);
-            ObservableWrapper.callNext(this._statusChanges, this._status);
+            ObservableWrapper.callEmit(this._valueChanges, this._value);
+            ObservableWrapper.callEmit(this._statusChanges, this._status);
         }
         if (isPresent(this._parent) && !onlySelf) {
             this._parent.updateValueAndValidity({ onlySelf: onlySelf, emitEvent: emitEvent });
@@ -143,7 +143,7 @@ export class AbstractControl {
         this._errors = errors;
         this._status = this._calculateStatus();
         if (emitEvent) {
-            ObservableWrapper.callNext(this._statusChanges, this._status);
+            ObservableWrapper.callEmit(this._statusChanges, this._status);
         }
         if (isPresent(this._parent)) {
             this._parent._updateControlsErrors();
@@ -191,7 +191,7 @@ export class AbstractControl {
  * `Control` is one of the three fundamental building blocks used to define forms in Angular, along
  * with {@link ControlGroup} and {@link ControlArray}.
  *
- * ##Usage
+ * ## Usage
  *
  * By default, a `Control` is created for every `<input>` or other form component.
  * With {@link NgFormControl} or {@link NgFormModel} an existing {@link Control} can be
@@ -341,7 +341,7 @@ export class ControlGroup extends AbstractControl {
  * along with {@link Control} and {@link ControlGroup}. {@link ControlGroup} can also contain
  * other controls, but is of fixed length.
  *
- * ##Adding or removing controls
+ * ## Adding or removing controls
  *
  * To change the controls in the array, use the `push`, `insert`, or `removeAt` methods
  * in `ControlArray` itself. These methods ensure the controls are properly tracked in the
@@ -401,4 +401,3 @@ export class ControlArray extends AbstractControl {
         this.controls.forEach((control) => { control.setParent(this); });
     }
 }
-//# sourceMappingURL=model.js.map

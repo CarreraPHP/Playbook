@@ -1,3 +1,2 @@
 // Public API for render
-export { Renderer, RenderViewRef, RenderProtoViewRef, RenderFragmentRef, RenderViewWithFragments, DOCUMENT, RenderTemplateCmd, RenderTextCmd, RenderNgContentCmd, RenderBeginElementCmd, RenderBeginComponentCmd, RenderEmbeddedTemplateCmd, RenderBeginCmd } from './render/render';
-//# sourceMappingURL=render.js.map
+export { Renderer, RenderViewRef, RenderProtoViewRef, RenderFragmentRef, RenderViewWithFragments, RenderTemplateCmd, RenderTextCmd, RenderNgContentCmd, RenderBeginElementCmd, RenderBeginComponentCmd, RenderEmbeddedTemplateCmd, RenderBeginCmd, RenderComponentTemplate } from './render/api';

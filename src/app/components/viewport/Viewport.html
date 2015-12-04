@@ -4,6 +4,6 @@
         <i class="icon icon-edit medium" (click)="editor.config.toggle()"></i>
     </div>
     <div id="chartscene">
-        <pb-card />
+        <pb-card *ng-for="#item of items" [card-item]="item" />
     </div>
 </div>
