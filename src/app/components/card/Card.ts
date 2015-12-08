@@ -1,8 +1,8 @@
 import {
-	Component, Input, HostListener,
-	CORE_DIRECTIVES,
-	OnInit,
-	OnChanges, SimpleChange
+Component, Input, Output, HostListener, EventEmitter,
+CORE_DIRECTIVES,
+OnInit, AfterViewInit, AfterContentInit, AfterViewChecked, AfterContentChecked, ElementRef,
+OnChanges, SimpleChange
 } from 'angular2/angular2';
 import {CardService} from '../../services/CardService';
 import { InternalService } from '../../services/InternalService';
@@ -15,26 +15,60 @@ import { OptionService } from '../../services/OptionService';
 	directives: [CORE_DIRECTIVES]
 })
 
-export class Card implements OnInit {
-	@Input('card-item') item:CardService;
-	
-	constructor() {
-		
+export class Card implements OnInit, AfterViewInit, AfterContentInit {
+	@Input('card-item') item: CardService;
+	@Output('rectAvailable') BoundedRect: EventEmitter<any> = new EventEmitter();
+
+	constructor(private elRef: ElementRef) {
+
 	}
 
 	ngOnInit() {
-		console.log("within card item, ", this.item);
+		// console.log("within card item, ", this.item);
+	}
+
+	ngOnChanges(changes: { [key: string]: SimpleChange }) {
+		console.log("data assigned : ", changes);
+	}
+
+	ngAfterViewInit() {
+		this.emitBoundedRect();
+	}
+
+	ngAfterContentInit() {
+		// console.log("Content Init : ", this.elRef.nativeElement, arguments);
+		// this.emitBoundedRect();
 	}
 	
-	ngOnChanges(changes: {[key:string]:SimpleChange}) {
-		console.log("data assigned : ", changes);	
-	 }
+	ngAfterViewChecked() {
+		// this.emitBoundedRect();
+	}
+
+	ngAfterContentChecked() {
+		// this.emitBoundedRect();
+	}
 	
+	emitBoundedRect() {
+		let el = this.elRef.nativeElement,
+			elRect = el.getBoundingClientRect();
+		// console.log("View Init : ", elRect.height, elRect.left, elRect.top);
+		this.BoundedRect.emit({
+			rect: {
+				height: elRect.height,
+				width: elRect.width,
+				left: elRect.left,
+				top: elRect.top
+			},
+			item: this.item,
+			el: el
+		});
+	}
+
 	highlightRelation(cardCmp, enableAction) {
-		
+
 	}
-	
+
 	@HostListener('click', ['$event']) OnHostClick(event) {
-		console.log("tiggered when click is made", arguments);
+		// console.log("tiggered when click is made", arguments);
 	}
 }

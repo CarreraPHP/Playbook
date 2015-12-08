@@ -1365,9 +1365,11 @@ p{color:#999;margin:0px;padding:1em;border-top:1px dashed #cccccc;width:200px;ma
 }
 
 
-div#chartcanvas {
+div#chartcanvas, pb-viewport {
+    display: block;
     position: absolute;
-    right: 420px;
+    right: 0;
+    /*right: 420px was earlier*/
     /* width: 100%; */
     left: 0;
     /* border: 1px solid; */
@@ -1385,7 +1387,8 @@ div#chartscene {
     right:0;
 }
 
-#chartcanvas > #chartscene > div {
+#chartcanvas > #chartscene > div, 
+pb-viewport > #chartscene > pb-card {
     position: absolute;
     -moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
     -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;

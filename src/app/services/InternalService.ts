@@ -4,7 +4,7 @@ import { InternalInterface } from '../interfaces/InternalInterface';
 @Injectable()
 export class InternalService {
 
-	constructor(public classes:Object, public styles:string) {
+	constructor(public classes:Object, public styles:string, public left:number) {
 		if(!("card" in this.classes)) {
 			this.classes['card'] = true;
 		}

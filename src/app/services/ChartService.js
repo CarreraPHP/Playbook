@@ -15,6 +15,9 @@ var CardService_1 = require('./CardService');
 var ChartService = (function () {
     function ChartService() {
         this.items = [];
+        this._cardCounter = 0;
+        this._optionCounter = 0;
+        this._actorCounter = 0;
         console.log("Chart Service got initialised");
         this.addMockData();
     }
@@ -22,18 +25,28 @@ var ChartService = (function () {
         this.items.push(item);
     };
     ChartService.prototype.addMockData = function () {
+        this.items.push(this.generateMockData());
+        this.items.push(this.generateMockData());
+        this.items.push(this.generateMockData());
+        console.log("Chart Service add method called...", this.items);
+    };
+    ChartService.prototype.generateMockData = function () {
         var internal = new InternalService_1.InternalService({
             card: true
-        }, "");
+        }, "", 0);
         var options = [];
         var actors = [];
-        options.push(new OptionService_1.OptionService("opt1", "Option 1", "card1"));
-        actors.push(new ActorService_1.ActorService("act1", "Actor 1", "actor1@mail.com", "9884988401"));
-        actors.push(new ActorService_1.ActorService("act2", "Actor 2", "actor2@mail.com", "9884988402"));
-        this.items.push(new CardService_1.CardService("card1", "card 1 description", "Begin", internal, options, actors));
-        this.items.push(new CardService_1.CardService("card2", "card 2 description", "Actor", internal, options, actors));
-        this.items.push(new CardService_1.CardService("card3", "card 3 description", "End", internal, options, actors));
-        console.log("Chart Service add method called...", this.items);
+        var cardType = ["Begin", "Actor", "End"];
+        this._cardCounter++;
+        this._optionCounter++;
+        this._actorCounter++;
+        options.push(new OptionService_1.OptionService("opt" + this._optionCounter, "Option " + this._optionCounter, "card" + (this._optionCounter + 1)));
+        actors.push(new ActorService_1.ActorService("act" + this._actorCounter, "Actor " + this._actorCounter, "actor" + this._actorCounter + "@mail.com", "988498840" + this._actorCounter));
+        this._actorCounter++;
+        actors.push(new ActorService_1.ActorService("act" + this._actorCounter, "Actor " + this._actorCounter, "actor" + this._actorCounter + "@mail.com", "988498840" + this._actorCounter));
+        var selCardType = cardType[this._cardCounter - 1];
+        var item = new CardService_1.CardService("card" + this._cardCounter, "card " + this._cardCounter + " description", selCardType, internal, selCardType === 'End' ? [] : options, actors);
+        return item;
     };
     ChartService.prototype.getAll = function () {
         return this.items;
