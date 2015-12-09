@@ -19,6 +19,7 @@ var Card = (function () {
     };
     Card.prototype.ngOnChanges = function (changes) {
         console.log("data assigned : ", changes);
+        this._internal = changes['item'].currentValue.internal;
     };
     Card.prototype.ngAfterViewInit = function () {
         this.emitBoundedRect();
@@ -28,6 +29,7 @@ var Card = (function () {
         // this.emitBoundedRect();
     };
     Card.prototype.ngAfterViewChecked = function () {
+        console.log(this.item.name, this.item.internal.left, this._internal.left);
         // this.emitBoundedRect();
     };
     Card.prototype.ngAfterContentChecked = function () {
@@ -37,6 +39,7 @@ var Card = (function () {
         var el = this.elRef.nativeElement, elRect = el.getBoundingClientRect();
         // console.log("View Init : ", elRect.height, elRect.left, elRect.top);
         this.BoundedRect.emit({
+            event: 'init',
             rect: {
                 height: elRect.height,
                 width: elRect.width,

@@ -32,7 +32,7 @@ export class ChartService {
 	generateMockData(): CardService {
 		let internal = new InternalService({
 			card: true
-		}, "", 0);
+		}, "", 0, 0);
 		let options:OptionService[] = []; 
 		let actors:ActorService[] = [];
 		let cardType:string[] = ["Begin", "Actor", "End"];

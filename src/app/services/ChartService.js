@@ -33,7 +33,7 @@ var ChartService = (function () {
     ChartService.prototype.generateMockData = function () {
         var internal = new InternalService_1.InternalService({
             card: true
-        }, "", 0);
+        }, "", 0, 0);
         var options = [];
         var actors = [];
         var cardType = ["Begin", "Actor", "End"];

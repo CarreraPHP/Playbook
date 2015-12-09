@@ -18,6 +18,8 @@ import { OptionService } from '../../services/OptionService';
 export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	@Input('card-item') item: CardService;
 	@Output('rectAvailable') BoundedRect: EventEmitter<any> = new EventEmitter();
+	
+	private _internal:InternalService;
 
 	constructor(private elRef: ElementRef) {
 
@@ -29,6 +31,7 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 
 	ngOnChanges(changes: { [key: string]: SimpleChange }) {
 		console.log("data assigned : ", changes);
+		this._internal = changes['item'].currentValue.internal;
 	}
 
 	ngAfterViewInit() {
@@ -41,6 +44,7 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	}
 	
 	ngAfterViewChecked() {
+		console.log(this.item.name, this.item.internal.left, this._internal.left);
 		// this.emitBoundedRect();
 	}
 
@@ -53,6 +57,7 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 			elRect = el.getBoundingClientRect();
 		// console.log("View Init : ", elRect.height, elRect.left, elRect.top);
 		this.BoundedRect.emit({
+			event: 'init',
 			rect: {
 				height: elRect.height,
 				width: elRect.width,

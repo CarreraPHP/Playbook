@@ -9,17 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var angular2_1 = require('angular2/angular2');
 var InternalService = (function () {
-    function InternalService(classes, styles, left) {
+    function InternalService(classes, styles, left, top) {
         this.classes = classes;
         this.styles = styles;
         this.left = left;
+        this.top = top;
         if (!("card" in this.classes)) {
             this.classes['card'] = true;
         }
     }
     InternalService = __decorate([
         angular2_1.Injectable(), 
-        __metadata('design:paramtypes', [Object, String, Number])
+        __metadata('design:paramtypes', [Object, String, Number, Number])
     ], InternalService);
     return InternalService;
 })();

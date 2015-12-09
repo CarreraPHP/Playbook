@@ -5,7 +5,9 @@
     </div>
     <div id="chartscene">
         <pb-card *ng-for="#item of items" 
-            [card-item]="item" [style.left.px]="item.internal.left"
+            [card-item]="item" 
+            [style.left.px]="item.internal.left" 
+            [style.top.px]="item.internal.top" 
             (rect-available)="onCardBoundedRectAvailable($event, items)" />
     </div>
 <!--</div>-->

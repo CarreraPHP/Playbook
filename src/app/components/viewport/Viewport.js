@@ -26,15 +26,20 @@ var Viewport = (function () {
     };
     Viewport.prototype.ngOnDestroy = function () { };
     Viewport.prototype.onCardBoundedRectAvailable = function (prop, items) {
-        var refLeft = prop.rect.left + prop.rect.width + Viewport.CARD_GAP;
+        var refLeft = (prop.item.internal.left) + prop.rect.width + Viewport.CARD_GAP;
+        var refTop = (prop.item.internal.left) + prop.rect.height + Viewport.CARD_GAP;
+        // let refLeft = (prop.item.internal.left > prop.rect.left ? prop.item.internal.left : prop.rect.left) + prop.rect.width + Viewport.CARD_GAP;
         console.log("viewport listening", arguments);
         collection_1.ListWrapper.forEachWithIndex(prop.item.options, function (opt, k) {
             // console.log("viewport listening", prop, this);
+            // items referenced in the options should be placed to the right with the GAP.
             collection_1.ListWrapper.forEachWithIndex(items, function (item, ik) {
                 if (item.name == opt.reference) {
                     item.internal.left = refLeft;
                 }
             });
+            for (var i = items.length - 1; i >= 0; i--) {
+            }
         });
     };
     Viewport.CARD_GAP = 100;
