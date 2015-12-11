@@ -1,47 +1,49 @@
-<div [class.card]="item.internal.classes.card">
-    <div *ng-if="item.type == 'Activity'" class="title">
-        <span class="fa fa-task"></span>
-        <span>{{item.name}}</span>
-    </div>
-    <div *ng-if="item.type == 'Begin' || item.type == 'End'" class="content card-special">
-        <div>
-            <div class="jfc-width-20">
-                <i *ng-if="item.type == 'Begin'" class="icon icon-flag-start x-large"></i>
-                <i *ng-if="item.type == 'End'" class="icon icon-flag-end x-large"></i>
-            </div>
+<div [class.card]="item.internal.classes.card" [ngSwitch]="enableEditor">
+    <template [ngSwitchWhen]="true">
+        <div [style.height.px]="editorHeight" [style.width.px]="editorWidth"></div>
+    </template>
+    <template [ngSwitchWhen]="false">
+        <div *ngIf="item.type == 'Activity'" class="title">
+            <span class="fa fa-task"></span>
+            <span>{{item.name}}</span>
+        </div>
+        <div *ngIf="item.type == 'Begin' || item.type == 'End'" class="content card-special">
             <div>
-                <div class="medium special-title">
-                    <span>{{item.name}}</span>
+                <div class="jfc-width-20">
+                    <i *ngIf="item.type == 'Begin'" class="icon icon-flag-start x-large"></i>
+                    <i *ngIf="item.type == 'End'" class="icon icon-flag-end x-large"></i>
                 </div>
-                <div class="small" [inner-html]="item.description"></div>
-                <!-- should create pipe '|' formattext -->
+                <div>
+                    <div class="medium special-title">
+                        <span>{{item.name}}</span>
+                    </div>
+                    <div class="small" [innerHtml]="item.description"></div>
+                    <!-- should create pipe '|' formattext -->
+                </div>
             </div>
         </div>
-    </div>
-    <div *ng-if="item.type == 'Activity'" class="content">
-        {{item.description}}
-    </div>
-    
-    <div *ng-if="item.type == 'Actor'" class="actors jfc-width-100">
-        <div class="actor" *ng-for="#actor of item.actors" id="{{actor.id}}">
-            <div></div>
-            <div>
-                <div class="medium">{{actor.name}}</div>
-                <div class="small">{{actor.email}}</div>
-                <div class="small">{{actor.contact}}</div>
+        <div *ngIf="item.type == 'Activity'" class="content">
+            {{item.description}}
+        </div>
+
+        <div *ngIf="item.type == 'Actor'" class="actors jfc-width-100">
+            <div class="actor" *ngFor="#actor of item.actors" id="{{actor.id}}">
+                <div></div>
+                <div>
+                    <div class="medium">{{actor.name}}</div>
+                    <div class="small">{{actor.email}}</div>
+                    <div class="small">{{actor.contact}}</div>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <div class="options">
-        <div *ng-for="#option of item.options" id="{{option.id}}" 
-            (mouseover)="highlightRelation(this, true)" 
-            (mouseleave)="highlightRelation(this, false)">
-            <div>
-                <span class="jfc-width-80">{{option.name}}</span>
-                <span class="jfc-width-20 fa fa-play"></span>
+
+        <div class="options">
+            <div *ngFor="#option of item.options" id="{{option.id}}" (mouseover)="highlightRelation(this, true)" (mouseleave)="highlightRelation(this, false)">
+                <div>
+                    <span class="jfc-width-80">{{option.name}}</span>
+                    <span class="jfc-width-20 fa fa-play"></span>
+                </div>
             </div>
         </div>
-    </div>
-    
+    </template>
 </div>

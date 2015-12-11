@@ -8,6 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var angular2_1 = require('angular2/angular2');
+var collection_1 = require('angular2/src/facade/collection');
 var InternalService_1 = require('./InternalService');
 var ActorService_1 = require('./ActorService');
 var OptionService_1 = require('./OptionService');
@@ -27,19 +28,36 @@ var ChartService = (function () {
     ChartService.prototype.addMockData = function () {
         this.items.push(this.generateMockData());
         this.items.push(this.generateMockData());
+        this.items.push(this.generateMockData([{
+                linkDirection: "top",
+                linkReference: "card2"
+            }, {
+                linkDirection: "left",
+                linkReference: "card1"
+            }]));
         this.items.push(this.generateMockData());
         console.log("Chart Service add method called...", this.items);
     };
-    ChartService.prototype.generateMockData = function () {
+    ChartService.prototype.generateMockData = function (link) {
         var internal = new InternalService_1.InternalService({
             card: true
-        }, "", 0, 0);
+        }, "", 0, 0, (this._cardCounter === 0 ? 'start' : 'card' + this._cardCounter), 'start');
         var options = [];
         var actors = [];
-        var cardType = ["Begin", "Actor", "End"];
+        var cardType = ["Begin", "Activity", "Actor", "End"];
         this._cardCounter++;
         this._optionCounter++;
         this._actorCounter++;
+        if (link) {
+            collection_1.ListWrapper.forEachWithIndex(link, function (l, k) {
+                if (l.linkDirection && l.linkDirection === "top") {
+                    internal.linkTop = l.linkReference;
+                }
+                if (l.linkDirection && l.linkDirection === "left") {
+                    internal.linkLeft = l.linkReference;
+                }
+            });
+        }
         options.push(new OptionService_1.OptionService("opt" + this._optionCounter, "Option " + this._optionCounter, "card" + (this._optionCounter + 1)));
         actors.push(new ActorService_1.ActorService("act" + this._actorCounter, "Actor " + this._actorCounter, "actor" + this._actorCounter + "@mail.com", "988498840" + this._actorCounter));
         this._actorCounter++;

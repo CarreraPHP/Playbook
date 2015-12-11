@@ -17,9 +17,11 @@ import { OptionService } from '../../services/OptionService';
 
 export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	@Input('card-item') item: CardService;
+	@Input('show-edtior')  showEditor:boolean; // determines whether editor should be shown or not.
 	@Output('rectAvailable') BoundedRect: EventEmitter<any> = new EventEmitter();
 	
 	private _internal:InternalService;
+	private enableEditor: boolean = false; // flag for when to editor screen
 
 	constructor(private elRef: ElementRef) {
 
@@ -30,11 +32,12 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	}
 
 	ngOnChanges(changes: { [key: string]: SimpleChange }) {
-		console.log("data assigned : ", changes);
+		// console.log("data assigned : ", changes);
 		this._internal = changes['item'].currentValue.internal;
 	}
 
 	ngAfterViewInit() {
+		// console.log("View Init : ", this.elRef.nativeElement, arguments);
 		this.emitBoundedRect();
 	}
 
@@ -44,7 +47,7 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	}
 	
 	ngAfterViewChecked() {
-		console.log(this.item.name, this.item.internal.left, this._internal.left);
+		// console.log(this.item.name, this.item.internal.left, this._internal.left);
 		// this.emitBoundedRect();
 	}
 
@@ -55,7 +58,11 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	emitBoundedRect() {
 		let el = this.elRef.nativeElement,
 			elRect = el.getBoundingClientRect();
-		// console.log("View Init : ", elRect.height, elRect.left, elRect.top);
+		console.log("Emit Bounded Recr : ", elRect.height, elRect.left, elRect.top);
+		
+		this.item.internal.width = elRect.width;
+		this.item.internal.height = elRect.height;
+		
 		this.BoundedRect.emit({
 			event: 'init',
 			rect: {
@@ -68,6 +75,14 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 			el: el
 		});
 	}
+	
+	get editorWidth() : number {
+		return this.item.internal.width;
+	}
+	
+	get editorHeight() : number {
+		return this.item.internal.height;
+	}
 
 	highlightRelation(cardCmp, enableAction) {
 
@@ -75,5 +90,15 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 
 	@HostListener('click', ['$event']) OnHostClick(event) {
 		// console.log("tiggered when click is made", arguments);
+	}
+	
+	@HostListener('mouseenter', ['$event']) OnHostOver(event) {
+		this.enableEditor = true;
+		console.log("tiggered when mouse enters card", arguments);
+	}
+	
+	@HostListener('mouseleave', ['$event']) OnHostLeava(event) {
+		this.enableEditor = false;
+		console.log("tiggered when mouse leaves card", arguments);
 	}
 }

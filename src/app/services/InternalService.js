@@ -9,18 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var angular2_1 = require('angular2/angular2');
 var InternalService = (function () {
-    function InternalService(classes, styles, left, top) {
+    function InternalService(classes, styles, left, top, linkLeft, linkTop, height, width) {
         this.classes = classes;
         this.styles = styles;
         this.left = left;
         this.top = top;
+        this.linkLeft = linkLeft;
+        this.linkTop = linkTop;
+        this.height = height;
+        this.width = width;
         if (!("card" in this.classes)) {
             this.classes['card'] = true;
+        }
+        //height & width are used for reference purpose and not actually taken into consideration.
+        if (!height) {
+            this.height = 0;
+        }
+        if (!width) {
+            this.width = 0;
         }
     }
     InternalService = __decorate([
         angular2_1.Injectable(), 
-        __metadata('design:paramtypes', [Object, String, Number, Number])
+        __metadata('design:paramtypes', [Object, String, Number, Number, String, String, Number, Number])
     ], InternalService);
     return InternalService;
 })();

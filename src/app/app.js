@@ -7,14 +7,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var core_1 = require('angular2/core');
 var angular2_1 = require('angular2/angular2');
+// import {bootstrap} from 'angular2/bootstrap'; // version > 47 should have bootstrap barrel reference.
 var Viewport_1 = require('./components/viewport/Viewport');
 var ChartService_1 = require('./services/ChartService');
 var AppComponent = (function () {
     function AppComponent() {
     }
     AppComponent = __decorate([
-        angular2_1.Component({
+        core_1.Component({
             selector: 'pb-app',
             templateUrl: 'app/app.html',
             directives: [Viewport_1.Viewport]

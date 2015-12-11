@@ -1,13 +1,15 @@
 <!--<div id="chartcanvas" style="right: 0;">-->
-    <div id="chartTitle" class="large mono bold">
-        <span>{{name}}</span>
-        <i class="icon icon-edit medium" (click)="editor.config.toggle()"></i>
-    </div>
-    <div id="chartscene">
-        <pb-card *ng-for="#item of items" 
-            [card-item]="item" 
-            [style.left.px]="item.internal.left" 
-            [style.top.px]="item.internal.top" 
-            (rect-available)="onCardBoundedRectAvailable($event, items)" />
-    </div>
 <!--</div>-->
+<div id="chartTitle" class="large mono bold">
+    <span>{{name}}</span>
+    <i class="icon icon-edit medium" (click)="editor.config.toggle()"></i>
+</div>
+<div id="chartscene">
+    <pb-card *ngFor="#item of items" 
+        [card-item]="item" 
+        [style.left.px]="item.internal.left" 
+        [style.top.px]="item.internal.top"
+        (rectAvailable)="onCardBoundedRectAvailable($event, items)"
+        [show-edtior]="_showAdmin">
+    </pb-card>
+</div>
