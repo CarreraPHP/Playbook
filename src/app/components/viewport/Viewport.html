@@ -9,7 +9,8 @@
         [card-item]="item" 
         [style.left.px]="item.internal.left" 
         [style.top.px]="item.internal.top"
-        (rectAvailable)="onCardBoundedRectAvailable($event, items)"
+        (rectAvailable)="onCardBoundedRectAvailable($event, items)" 
+        (cardAction)="onCardAction($event)" 
         [show-edtior]="_showAdmin">
     </pb-card>
 </div>

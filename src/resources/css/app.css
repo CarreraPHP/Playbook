@@ -199,6 +199,7 @@ canvas { width: 100%; height: 100% }
 .icon-edit:before{
     content:"\f040";
     color:darkblue;
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .icon-edit, .icon-submit {
@@ -1424,6 +1425,7 @@ div#chartTitle {
 .icon-stop {
     width: 35px;
     color: red;
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .jfc-list .cell:nth-child(1) > div {
@@ -1433,47 +1435,55 @@ div#chartTitle {
 .icon-config {
     width: 35px;
     color: darkblue;
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .icon-config:before {
     content: '\f0ad';
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .icon-add-actor:before {
     content: '\f234';
-    text-shadow: rgb(251, 255, 84) 1px 1px 0px;
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .icon-add-option:before {
     content: '\f067';
     color: green;
-    /*text-shadow: green 1px 1px 0px;*/
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .icon-flag-start:before{
     content: '\f01d';
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .icon-flag-end:before{
     content: '\f11e';
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .icon-database:before, .icon-save:before{
     content: '\f1c0';
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .icon-filter:before{
     content: '\f0b0';
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .icon-trash:before{
     content: '\f1f8';
     color:red;
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .icon-minus:before{
     content: '\f056';
     color:red;
+    text-shadow: rgba(255, 255, 255, 0.4) 1px 1px 0px;
 }
 
 .pane-collasped {
@@ -1536,7 +1546,7 @@ div#chartTitle {
     z-index: 10;
 }
 
-.modal-anchor .modal-body {}
+/*.modal-anchor .modal-body {}*/
 
 .modal-anchored .modal-body {
     margin: 0;

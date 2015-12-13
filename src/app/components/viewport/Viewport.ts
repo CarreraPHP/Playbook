@@ -17,7 +17,6 @@ import { OptionInterface } from '../../interfaces/OptionInterface'
 })
 
 export class Viewport implements OnInit, OnDestroy, OnChanges {
-	static CARD_GAP = 100;
 	@Input('pb-name') name: string;
 	public items: CardService[];
 
@@ -51,20 +50,22 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 	}
 
 	onCardBoundedRectAvailable($event: any, items: CardService[]) {
-		let refLeft = ($event.item.internal.left) + $event.rect.width + Viewport.CARD_GAP;
-		let refTop = ($event.item.internal.top) + $event.rect.height + Viewport.CARD_GAP;
+		let refLeft = ($event.item.internal.left) + $event.rect.width + ChartService.CARD_GAP;
+		let refTop = ($event.item.internal.top) + $event.rect.height + ChartService.CARD_GAP;
 		// let refLeft = ($event.item.internal.left > $event.rect.left ? $event.item.internal.left : $event.rect.left) + $event.rect.width + Viewport.CARD_GAP;
 		
-		ListWrapper.forEachWithIndex(items, function(item: CardService, ik) {
-			
-			console.log("viewport listening", arguments, this.items, this);
-			
-			if ($event.item.name == item.internal.linkLeft) {
+		this.items.forEach((item: CardService, ik) => {
+			if ($event.item.id == item.internal.linkLeft) {
 				item.internal.left = refLeft;
+			} else if ("start" === item.internal.linkLeft) {
+				item.internal.left = 0;
 			}
-			if ($event.item.name == item.internal.linkTop) {
+			if ($event.item.id === item.internal.linkTop) {
 				item.internal.top = refTop;
+			} else if ("start" === item.internal.linkTop) {
+				item.internal.top = 0;
 			}
+			// console.log("viewport listening", refLeft, refTop, item.id, item.internal);
 		});
 		
 		// ListWrapper.forEachWithIndex($event.item.options, function(opt:OptionInterface, k){
@@ -76,5 +77,15 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 		// 		}
 		// 	});
 		// });
+	}
+	
+	onCardAction($event) {
+		console.log("card action", $event);
+		if($event.event === "addcard") {
+			$event.item.internal.left = this.chartService.getCord($event.item.internal, "left");
+			$event.item.internal.top = this.chartService.getCord($event.item.internal, "top");
+			this.chartService.items.push($event.item);
+			// this.items.push($event.item);	
+		} 
 	}
 }

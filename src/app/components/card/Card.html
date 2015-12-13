@@ -1,8 +1,26 @@
-<div [class.card]="item.internal.classes.card" [ngSwitch]="enableEditor">
-    <template [ngSwitchWhen]="true">
-        <div [style.height.px]="editorHeight" [style.width.px]="editorWidth"></div>
-    </template>
-    <template [ngSwitchWhen]="false">
+<div [class.card]="item.internal.classes.card">
+    <!--<template  [style.height.px]="editorHeight" [style.width.px]="editorWidth" >-->
+        <div *ngIf="!!enableEditor || !!enableEditor" class="card-overlay">
+            <div class="card-button-list">
+                <button class="card-button" (click)="addOption()">
+                    <i class="icon-add-option"></i>
+                </button>
+                <button class="card-button">
+                    <i class="icon-add-actor"></i>
+                </button>
+                <button class="card-button">
+                    <i class="icon-config "></i>
+                </button>
+                <button class="card-button">
+                    <i class="icon-trash "></i>
+                </button>
+                <button class="card-button">
+                    <i class="icon-edit "></i>
+                </button>
+            </div>
+        </div>
+    <!--</template>
+    <template>-->
         <div *ngIf="item.type == 'Activity'" class="title">
             <span class="fa fa-task"></span>
             <span>{{item.name}}</span>
@@ -45,5 +63,5 @@
                 </div>
             </div>
         </div>
-    </template>
+    <!--</template>-->
 </div>

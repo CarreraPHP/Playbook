@@ -8,11 +8,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var angular2_1 = require('angular2/angular2');
+var ChartService_1 = require('../../services/ChartService');
 var CardService_1 = require('../../services/CardService');
 var Card = (function () {
-    function Card(elRef) {
+    function Card(elRef, chartService) {
         this.elRef = elRef;
-        this.BoundedRect = new angular2_1.EventEmitter();
+        this.chartService = chartService;
+        this.boundedRect = new angular2_1.EventEmitter();
+        this.cardRefresh = new angular2_1.EventEmitter();
         this.enableEditor = false; // flag for when to editor screen
     }
     Card.prototype.ngOnInit = function () {
@@ -42,7 +45,7 @@ var Card = (function () {
         console.log("Emit Bounded Recr : ", elRect.height, elRect.left, elRect.top);
         this.item.internal.width = elRect.width;
         this.item.internal.height = elRect.height;
-        this.BoundedRect.emit({
+        this.boundedRect.emit({
             event: 'init',
             rect: {
                 height: elRect.height,
@@ -52,6 +55,12 @@ var Card = (function () {
             },
             item: this.item,
             el: el
+        });
+    };
+    Card.prototype.emitCardRefresh = function (type, item) {
+        this.cardRefresh.emit({
+            event: type,
+            item: item
         });
     };
     Object.defineProperty(Card.prototype, "editorWidth", {
@@ -69,6 +78,12 @@ var Card = (function () {
         configurable: true
     });
     Card.prototype.highlightRelation = function (cardCmp, enableAction) {
+    };
+    Card.prototype.addOption = function () {
+        var rowStart = this.chartService.getRowStartCard(this.item), card = this.chartService.generateCard("", "card description", rowStart, this.chartService.getColumnStartCard(this.item, rowStart)), opt = this.chartService.generateOption(card.id); // , "option name"
+        this.emitCardRefresh("addcard", card);
+        // this.chartService.items.push(card);
+        this.item.options.push(opt);
     };
     Card.prototype.OnHostClick = function (event) {
         // console.log("tiggered when click is made", arguments);
@@ -93,7 +108,11 @@ var Card = (function () {
         // determines whether editor should be shown or not.
         angular2_1.Output('rectAvailable'), 
         __metadata('design:type', angular2_1.EventEmitter)
-    ], Card.prototype, "BoundedRect", void 0);
+    ], Card.prototype, "boundedRect", void 0);
+    __decorate([
+        angular2_1.Output('cardAction'), 
+        __metadata('design:type', angular2_1.EventEmitter)
+    ], Card.prototype, "cardRefresh", void 0);
     __decorate([
         angular2_1.HostListener('click', ['$event']), 
         __metadata('design:type', Function), 
@@ -116,9 +135,10 @@ var Card = (function () {
         angular2_1.Component({
             selector: 'pb-card',
             templateUrl: 'app/components/card/Card.html',
+            styles: ["\n\t\t.card-overlay{\n\t\t\tposition:absolute;\n\t\t\tbackground: rgba(0, 0, 0, 0.6);\n\t\t\theight:100%;\n\t\t\twidth:100%;\n\t\t}\n\t\t.card-button-list{\n\t\t\tpadding: 0 0 0 20px;\n\t\t}\n\t\t.card-button{\n\t\t\twidth:36px;\n\t\t\theight:36px;\n\t\t\tborder-radius:50%;\n\t\t\tbackground:rgba(255, 255, 255, 0.5);\n\t\t\tpadding:5px;\n\t\t\tmargin:5px;\n\t\t}\n\t\t.card-button:hover{\n\t\t\tbackground:rgba(255, 255, 255, 0.9);\n\t\t}\n\t\t.card-overlay button i {\n\t\t\tfont: normal normal normal 25px/25px FontAwesome;\n\t\t\tmargin:0;padding:0;\n\t\t}\n\t"],
             directives: [angular2_1.CORE_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [angular2_1.ElementRef])
+        __metadata('design:paramtypes', [angular2_1.ElementRef, ChartService_1.ChartService])
     ], Card);
     return Card;
 })();

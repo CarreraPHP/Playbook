@@ -8,7 +8,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var angular2_1 = require('angular2/angular2');
-var collection_1 = require('angular2/src/facade/collection');
 var Card_1 = require('../card/Card');
 var ChartService_1 = require('../../services/ChartService');
 var Viewport = (function () {
@@ -40,17 +39,23 @@ var Viewport = (function () {
         configurable: true
     });
     Viewport.prototype.onCardBoundedRectAvailable = function ($event, items) {
-        var refLeft = ($event.item.internal.left) + $event.rect.width + Viewport.CARD_GAP;
-        var refTop = ($event.item.internal.top) + $event.rect.height + Viewport.CARD_GAP;
+        var refLeft = ($event.item.internal.left) + $event.rect.width + ChartService_1.ChartService.CARD_GAP;
+        var refTop = ($event.item.internal.top) + $event.rect.height + ChartService_1.ChartService.CARD_GAP;
         // let refLeft = ($event.item.internal.left > $event.rect.left ? $event.item.internal.left : $event.rect.left) + $event.rect.width + Viewport.CARD_GAP;
-        collection_1.ListWrapper.forEachWithIndex(items, function (item, ik) {
-            console.log("viewport listening", arguments, this.items, this);
-            if ($event.item.name == item.internal.linkLeft) {
+        this.items.forEach(function (item, ik) {
+            if ($event.item.id == item.internal.linkLeft) {
                 item.internal.left = refLeft;
             }
-            if ($event.item.name == item.internal.linkTop) {
+            else if ("start" === item.internal.linkLeft) {
+                item.internal.left = 0;
+            }
+            if ($event.item.id === item.internal.linkTop) {
                 item.internal.top = refTop;
             }
+            else if ("start" === item.internal.linkTop) {
+                item.internal.top = 0;
+            }
+            // console.log("viewport listening", refLeft, refTop, item.id, item.internal);
         });
         // ListWrapper.forEachWithIndex($event.item.options, function(opt:OptionInterface, k){
         // 	// items referenced in the options should be placed to the right with the GAP.
@@ -61,7 +66,14 @@ var Viewport = (function () {
         // 	});
         // });
     };
-    Viewport.CARD_GAP = 100;
+    Viewport.prototype.onCardAction = function ($event) {
+        console.log("card action", $event);
+        if ($event.event === "addcard") {
+            $event.item.internal.left = this.chartService.getCord($event.item.internal, "left");
+            $event.item.internal.top = this.chartService.getCord($event.item.internal, "top");
+            this.chartService.items.push($event.item);
+        }
+    };
     __decorate([
         angular2_1.Input('pb-name'), 
         __metadata('design:type', String)

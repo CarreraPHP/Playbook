@@ -9,7 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var angular2_1 = require('angular2/angular2');
 var CardService = (function () {
-    function CardService(name, description, type, internal, options, actors) {
+    function CardService(id, name, description, type, internal, options, actors) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.type = type;
@@ -19,7 +20,7 @@ var CardService = (function () {
     }
     CardService = __decorate([
         angular2_1.Injectable(), 
-        __metadata('design:paramtypes', [String, String, String, Object, Array, Array])
+        __metadata('design:paramtypes', [String, String, String, String, Object, Array, Array])
     ], CardService);
     return CardService;
 })();
