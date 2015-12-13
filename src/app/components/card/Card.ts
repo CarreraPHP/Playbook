@@ -44,6 +44,7 @@ import { OptionService } from '../../services/OptionService';
 
 export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	@Input('card-item') item: CardService;
+	// @Input('card-internal') itemInternal: InternalService; //needed only for tracking changes.
 	@Input('show-edtior')  showEditor:boolean; // determines whether editor should be shown or not.
 	@Output('rectAvailable') boundedRect: EventEmitter<any> = new EventEmitter();
 	@Output('cardAction') cardRefresh: EventEmitter<any> = new EventEmitter();
@@ -60,12 +61,12 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	}
 
 	ngOnChanges(changes: { [key: string]: SimpleChange }) {
-		// console.log("data assigned : ", changes);
+		console.log("data assigned : ", changes);
 		this._internal = changes['item'].currentValue.internal;
 	}
 
 	ngAfterViewInit() {
-		// console.log("View Init : ", this.elRef.nativeElement, arguments);
+		console.log("View Init : ", this.elRef.nativeElement, arguments);
 		this.emitBoundedRect();
 	}
 
@@ -76,7 +77,11 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	
 	ngAfterViewChecked() {
 		// console.log(this.item.name, this.item.internal.left, this._internal.left);
-		// this.emitBoundedRect();
+		let el = this.elRef.nativeElement,
+			elRect = el.getBoundingClientRect();
+		if(this.item.internal.height !== elRect.height){
+			this.emitBoundedRect();	
+		}
 	}
 
 	ngAfterContentChecked() {
@@ -86,7 +91,7 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	emitBoundedRect() {
 		let el = this.elRef.nativeElement,
 			elRect = el.getBoundingClientRect();
-		console.log("Emit Bounded Recr : ", elRect.height, elRect.left, elRect.top);
+		// console.log("Emit Bounded Recr : ", elRect.height, elRect.left, elRect.top);
 		
 		this.item.internal.width = elRect.width;
 		this.item.internal.height = elRect.height;
@@ -124,13 +129,7 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	}
 	
 	addOption() {
-		
-		let rowStart:string = this.chartService.getRowStartCard(this.item),
-			card = this.chartService.generateCard("", "card description", rowStart, this.chartService.getColumnStartCard(this.item, rowStart)),
-			opt = this.chartService.generateOption(card.id); // , "option name"
-		this.emitCardRefresh("addcard", card);
-		// this.chartService.items.push(card);
-		this.item.options.push(opt);
+		this.emitCardRefresh("add", this.item);
 	}
 
 	@HostListener('click', ['$event']) OnHostClick(event) {
@@ -139,11 +138,11 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	
 	@HostListener('mouseenter', ['$event']) OnHostOver(event) {
 		this.enableEditor = true;
-		console.log("tiggered when mouse enters card", arguments);
+		// console.log("tiggered when mouse enters card", arguments);
 	}
 	
 	@HostListener('mouseleave', ['$event']) OnHostLeava(event) {
 		this.enableEditor = false;
-		console.log("tiggered when mouse leaves card", arguments);
+		// console.log("tiggered when mouse leaves card", arguments);
 	}
 }

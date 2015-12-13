@@ -49,7 +49,7 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 		this._showView = !value;
 	}
 
-	onCardBoundedRectAvailable($event: any, items: CardService[]) {
+	onCardBoundedRectAvailable($event: any) {
 		let refLeft = ($event.item.internal.left) + $event.rect.width + ChartService.CARD_GAP;
 		let refTop = ($event.item.internal.top) + $event.rect.height + ChartService.CARD_GAP;
 		// let refLeft = ($event.item.internal.left > $event.rect.left ? $event.item.internal.left : $event.rect.left) + $event.rect.width + Viewport.CARD_GAP;
@@ -67,25 +67,19 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 			}
 			// console.log("viewport listening", refLeft, refTop, item.id, item.internal);
 		});
-		
-		// ListWrapper.forEachWithIndex($event.item.options, function(opt:OptionInterface, k){
-		
-		// 	// items referenced in the options should be placed to the right with the GAP.
-		// 	ListWrapper.forEachWithIndex(items, function(item:CardService, ik){
-		// 		if(item.name == opt.reference){
-		// 			item.internal.left = refLeft;
-		// 		}
-		// 	});
-		// });
 	}
 	
 	onCardAction($event) {
 		console.log("card action", $event);
-		if($event.event === "addcard") {
-			$event.item.internal.left = this.chartService.getCord($event.item.internal, "left");
-			$event.item.internal.top = this.chartService.getCord($event.item.internal, "top");
-			this.chartService.items.push($event.item);
-			// this.items.push($event.item);	
+		if($event.event === "add") {
+			let rowStart:string = this.chartService.getRowStartCard($event.item),
+				card = this.chartService.generateCard("", "card description", rowStart, this.chartService.getColumnStartCard($event.item, rowStart)),
+				opt = this.chartService.generateOption(card.id); // , "option name"
+				
+			card.internal.left = this.chartService.getCord(card.internal, "left");
+			card.internal.top = this.chartService.getCord(card.internal, "top");
+			this.chartService.items.push(card);
+			$event.item.options.push(opt);	
 		} 
 	}
 }

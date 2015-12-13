@@ -130,14 +130,14 @@ var ChartService = (function () {
         var ret = "start", toContinue = true, toContinueTillLast = true, 
         // link:string = "start",
         possibleCard = [], limitStart = 0, limit = 20;
-        console.log("before we dive in : ", linkLeft);
+        // console.log("before we dive in : ",  linkLeft);
         for (var i = 0; i < this.items.length; i++) {
             if (this.items[i].internal.linkLeft === linkLeft) {
                 possibleCard.push(this.items[i]);
             }
         }
         if (possibleCard.length > 0) {
-            console.log("possible card : ", possibleCard);
+            // console.log("possible card : ", possibleCard);
             while (possibleCard.length > 0 && limitStart < limit) {
                 for (var i = 0, j = possibleCard.length; i < possibleCard.length; i++) {
                     if (possibleCard[i].internal.linkTop === ret) {
@@ -146,7 +146,7 @@ var ChartService = (function () {
                         i = possibleCard.length; // to exit out of the for loop
                     }
                 }
-                console.log("i value after break : ", j, this.items[j].id, ret);
+                // console.log("i value after break : ", j, this.items[j].id, ret);
                 possibleCard.splice(j, 1);
                 limitStart++;
             }
@@ -155,19 +155,19 @@ var ChartService = (function () {
     };
     ChartService.prototype.getStartCard = function (item, linkLeft) {
         var ret = "", toContinue = true, toContinueTillLast = false, index = this.items.indexOf(item);
-        console.log("items", this.items);
+        // console.log("items", this.items);
         //find the start card in next column.
         for (var i = (index + 1); i < this.items.length; i++) {
             // if start card found, then find the last card in the next column
             // this step should be executed first in loop so that this will not
             // execute immediately after the code below to this one.
             if (!toContinue && toContinueTillLast && ret !== "" && this.items[i].internal.linkTop == "start") {
-                console.log("2nd loop", i);
+                // console.log("2nd loop", i);
                 ret = this.items[i - 1].id;
                 toContinueTillLast = false;
             }
             if (this.items[i].internal.linkTop == "start" && toContinue) {
-                console.log("1st loop", i);
+                // console.log("1st loop", i);
                 ret = this.items[i].id;
                 toContinue = false;
                 toContinueTillLast = true;

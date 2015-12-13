@@ -22,11 +22,11 @@ var Card = (function () {
         // console.log("within card item, ", this.item);
     };
     Card.prototype.ngOnChanges = function (changes) {
-        // console.log("data assigned : ", changes);
+        console.log("data assigned : ", changes);
         this._internal = changes['item'].currentValue.internal;
     };
     Card.prototype.ngAfterViewInit = function () {
-        // console.log("View Init : ", this.elRef.nativeElement, arguments);
+        console.log("View Init : ", this.elRef.nativeElement, arguments);
         this.emitBoundedRect();
     };
     Card.prototype.ngAfterContentInit = function () {
@@ -35,14 +35,17 @@ var Card = (function () {
     };
     Card.prototype.ngAfterViewChecked = function () {
         // console.log(this.item.name, this.item.internal.left, this._internal.left);
-        // this.emitBoundedRect();
+        var el = this.elRef.nativeElement, elRect = el.getBoundingClientRect();
+        if (this.item.internal.height !== elRect.height) {
+            this.emitBoundedRect();
+        }
     };
     Card.prototype.ngAfterContentChecked = function () {
         // this.emitBoundedRect();
     };
     Card.prototype.emitBoundedRect = function () {
         var el = this.elRef.nativeElement, elRect = el.getBoundingClientRect();
-        console.log("Emit Bounded Recr : ", elRect.height, elRect.left, elRect.top);
+        // console.log("Emit Bounded Recr : ", elRect.height, elRect.left, elRect.top);
         this.item.internal.width = elRect.width;
         this.item.internal.height = elRect.height;
         this.boundedRect.emit({
@@ -80,21 +83,18 @@ var Card = (function () {
     Card.prototype.highlightRelation = function (cardCmp, enableAction) {
     };
     Card.prototype.addOption = function () {
-        var rowStart = this.chartService.getRowStartCard(this.item), card = this.chartService.generateCard("", "card description", rowStart, this.chartService.getColumnStartCard(this.item, rowStart)), opt = this.chartService.generateOption(card.id); // , "option name"
-        this.emitCardRefresh("addcard", card);
-        // this.chartService.items.push(card);
-        this.item.options.push(opt);
+        this.emitCardRefresh("add", this.item);
     };
     Card.prototype.OnHostClick = function (event) {
         // console.log("tiggered when click is made", arguments);
     };
     Card.prototype.OnHostOver = function (event) {
         this.enableEditor = true;
-        console.log("tiggered when mouse enters card", arguments);
+        // console.log("tiggered when mouse enters card", arguments);
     };
     Card.prototype.OnHostLeava = function (event) {
         this.enableEditor = false;
-        console.log("tiggered when mouse leaves card", arguments);
+        // console.log("tiggered when mouse leaves card", arguments);
     };
     __decorate([
         angular2_1.Input('card-item'), 
