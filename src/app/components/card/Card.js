@@ -33,6 +33,10 @@ var Card = (function () {
         // console.log("Content Init : ", this.elRef.nativeElement, arguments);
         // this.emitBoundedRect();
     };
+    /**
+     * Card below to the current adjusts itself when option is added.
+     * Need to cascade the same to all items in the column.
+     */
     Card.prototype.ngAfterViewChecked = function () {
         // console.log(this.item.name, this.item.internal.left, this._internal.left);
         var el = this.elRef.nativeElement, elRect = el.getBoundingClientRect();

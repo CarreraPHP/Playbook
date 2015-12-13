@@ -75,6 +75,10 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 		// this.emitBoundedRect();
 	}
 	
+	/**
+	 * Card below to the current adjusts itself when option is added. 
+	 * Need to cascade the same to all items in the column.
+	 */
 	ngAfterViewChecked() {
 		// console.log(this.item.name, this.item.internal.left, this._internal.left);
 		let el = this.elRef.nativeElement,
