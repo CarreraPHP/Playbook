@@ -1,9 +1,9 @@
 import {
 Component, Input, Output, HostListener, EventEmitter,
-CORE_DIRECTIVES,
 OnInit, AfterViewInit, AfterContentInit, AfterViewChecked, AfterContentChecked, ElementRef,
 OnChanges, SimpleChange
-} from 'angular2/angular2';
+} from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { ChartService } from '../../services/ChartService';
 import { CardService } from '../../services/CardService';
 import { InternalService } from '../../services/InternalService';

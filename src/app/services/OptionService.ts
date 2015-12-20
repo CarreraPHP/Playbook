@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/angular2';
+import {Injectable} from 'angular2/core';
 import { OptionInterface } from '../interfaces/OptionInterface';
 
 @Injectable()
