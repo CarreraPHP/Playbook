@@ -69,6 +69,14 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 		});
 	}
 	
+	/**
+	 * When a card action for "add" is triggered. When start by get the start card of the previous column for linkLeft.
+	 * Then we get the column start card for the current column, if there are already many cards placed in the same column
+	 * then get the last on in order and use it to be linkTop.
+	 * 
+	 * Later we may need to trigger an action to rearrange the cards in the column of the card to which the option was originally added.
+	 * This is need because we have increased the size of the card and therby reduced the space below it. this needs to fixed.
+	 */
 	onCardAction($event) {
 		console.log("card action", $event);
 		if($event.event === "add") {

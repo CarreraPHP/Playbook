@@ -1,5 +1,5 @@
 import {
-Component, Input, Output, HostListener, EventEmitter,
+Component, Input, Output, HostListener, EventEmitter, HostBinding,
 OnInit, AfterViewInit, AfterContentInit, AfterViewChecked, AfterContentChecked, ElementRef,
 OnChanges, SimpleChange
 } from 'angular2/core';
@@ -48,6 +48,7 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	@Input('show-edtior')  showEditor:boolean; // determines whether editor should be shown or not.
 	@Output('rectAvailable') boundedRect: EventEmitter<any> = new EventEmitter();
 	@Output('cardAction') cardRefresh: EventEmitter<any> = new EventEmitter();
+	// @HostBinding('style.left.px') cleft:number;
 	
 	private _internal:InternalService;
 	private enableEditor: boolean = false; // flag for when to editor screen
@@ -132,6 +133,11 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 
 	}
 	
+	/**
+	 * When a option is added a card is added mandatorily.
+	 * This makes the "add" cardrefresh event to be triggered. 
+	 * This also mandates that we rearrange the card below the current card. 
+	 */
 	addOption() {
 		this.emitCardRefresh("add", this.item);
 	}
