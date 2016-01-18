@@ -5,12 +5,32 @@
     <i class="icon icon-edit medium" (click)="editor.config.toggle()"></i>
 </div>
 <div id="chartscene">
-    <pb-card *ngFor="#item of items" 
-        [card-item]="item" 
-        [style.left.px]="item.internal.left" 
-        [style.top.px]="item.internal.top"
-        (rectAvailable)="onCardBoundedRectAvailable($event, items)" 
-        (cardAction)="onCardAction($event)" 
-        [show-edtior]="_showAdmin">
-    </pb-card>
+    <template ngFor #item [ngForOf]="items">
+        <pb-card 
+            [card-item]="item" 
+            [style.left.px]="item.internal.left" 
+            [style.top.px]="item.internal.top"
+            (rectAvailable)="onCardBoundedRectAvailable($event, items)" 
+            (cardAction)="onCardAction($event)" 
+            [show-edtior]="_showAdmin">
+        </pb-card>
+        <template ngFor #option [ngForOf]="item.options">
+            <pb-arrow
+                [ngClass]="option.internal.classes" 
+                [style.left.px]="option.internal.left" 
+                [style.top.px]="option.internal.top"
+                [style.height.px]="option.internal.height" 
+                [style.width.px]="option.internal.width"
+                [card-item]="item" 
+                [arrow-item]="option">
+            </pb-arrow>
+        </template>
+    </template>
 </div>
+<!--ng-class="option.internal.class" 
+                ng-style="option.internal.style"-->
+<!--[style.left.px]="item.internal.left" 
+            [style.top.px]="item.internal.top"
+            (rectAvailable)="onCardBoundedRectAvailable($event, items)" 
+            (cardAction)="onCardAction($event)" 
+            [show-edtior]="_showAdmin">-->

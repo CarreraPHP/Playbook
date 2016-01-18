@@ -1,7 +1,8 @@
-import { Injectable } from 'angular2/core';
+import { Injectable, ChangeDetectorRef } from 'angular2/core';
 import { ListWrapper } from 'angular2/src/facade/collection';
 import { CardInterface } from '../interfaces/CardInterface';
 import { InternalService } from './InternalService';
+import { OptionInternalService } from './OptionInternalService';
 import { ActorService } from './ActorService';
 import { OptionService } from './OptionService';
 import { CardService } from './CardService';
@@ -21,7 +22,7 @@ export class ChartService {
 	private _actorCounter = 0;
 	
 	constructor() {
-		console.log("Chart Service got initialised");
+		// console.log("Chart Service got initialised");
 		this.addMockData();
 	}
 	
@@ -49,7 +50,7 @@ export class ChartService {
 			linkDirection: "left", 
 			linkReference: "card2"
 		}]));
-		console.log("Chart Service add method called...", this.items);
+		// console.log("Chart Service add method called...", this.items);
 	}
 	
 	generateInternal(linkLeft?:string, linkTop?:string): InternalService {
@@ -69,7 +70,10 @@ export class ChartService {
 	generateOption(reference:string, name?:string): OptionService {
 		let i = ++this._optionCounter,
 			oid = "opt" + i,
-			a = new OptionService(oid, name ? name : "Option " + i, reference);
+            internal = new InternalService({
+                card: true
+            }, "", 0, 0, (this._cardCounter === 0 ? 'start' : 'card' + this._cardCounter), 'start'),
+			a = new OptionService(oid, name ? name : "Option " + i, reference, internal);
 		return a;
 	}
 	
@@ -77,6 +81,9 @@ export class ChartService {
 		let internal = new InternalService({
 			card: true
 		}, "", 0, 0, (this._cardCounter === 0 ? 'start' : 'card' + this._cardCounter), 'start');
+        let optInternal = new OptionInternalService({
+			arrow: true
+		}, "", 0, 0);
 		let options:OptionService[] = []; 
 		let actors:ActorService[] = [];
 		let cardType:string[] = ["Begin", "Activity", "Actor", "End"];
@@ -96,7 +103,7 @@ export class ChartService {
 			});
 		}
 		
-		options.push(new OptionService("opt" + this._optionCounter , "Option " + this._optionCounter, "card" + (this._optionCounter+1))); 
+		options.push(new OptionService("opt" + this._optionCounter , "Option " + this._optionCounter, "card" + (this._optionCounter+1), optInternal)); 
 		actors.push(new ActorService("act" + this._actorCounter, "Actor " + this._actorCounter, "actor" + this._actorCounter + "@mail.com", "988498840" + this._actorCounter));
 		this._actorCounter++;
 		actors.push(new ActorService("act" + this._actorCounter, "Actor " + this._actorCounter, "actor" + this._actorCounter + "@mail.com", "988498840" + this._actorCounter));
@@ -121,6 +128,7 @@ export class ChartService {
 				ret = (item.internal.top) + item.internal.height + ChartService.CARD_GAP; 
 			}
 		});
+        // this.changeDetector.markForCheck();
 		return ret;
 	}
 	

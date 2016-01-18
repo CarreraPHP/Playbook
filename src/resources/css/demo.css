@@ -11,13 +11,11 @@
 				margin: 0;
 				font-family: "Arial", Helvetica, sans-serif;;
 				overflow: hidden;
-/*				background: radial-gradient(circle at 50% 75%, #3F4041, #1F1F1F); */
-				/* background: url(../images/alpha-bg-2x2.svg), radial-gradient(ellipse at 50% 50%, rgba(207,208,215,0.2) 42%, rgba(0, 0, 0, 0.4) 90%); */
-
-				/* background-blend-mode: multiply; */
-
+                /*background: radial-gradient(circle at 50% 75%, #3F4041, #1F1F1F); 
+                background: url(../images/alpha-bg-2x2.svg), radial-gradient(ellipse at 50% 50%, rgba(207,208,215,0.2) 42%, rgba(0, 0, 0, 0.4) 90%); 
+                background-blend-mode: multiply; */
 				background-color: #fff;
-}
+            }
 
 			#container, .container{
 				width:100%;
@@ -67,59 +65,59 @@
 				width: 100%;
 				text-align: center;
 			}
-                        
-                        .highlight-node{
-                            opacity: 1 !important;
-                        }
+            
+            .highlight-node{
+                opacity: 1 !important;
+            }
 
-                        .arrow-tail, .arrow-straight-tail{
-                            background: blue !important;
-                            height: 13px;
-                            width: 5px;
-                            position: absolute;
-                            bottom: -8px;
-                        }
-                        
-                        .arrow-head{
-                            position: absolute;
-                            right: 2px;                            
-                            height: 34px;
-                            width: 10px;
-                            overflow: hidden;
-                        }
-                        
-                        .arrow-head div{
-                            height: 15px;
-                            width: 15px;
-                            position: absolute;
-                            border: 3px solid blue !important;
-                            right: 4px;
-                            transform: rotate(45deg);
-                            top: 0px;
-                        }
-                        
-                        .arrow-reverse .arrow-tail{
-                            bottom: none;
-                            top:-8px;
-                        }
-                        
-                        .arrow .arrow-head{
-                            top: -12px;
-                        }
-                        
-                        .arrow-reverse .arrow-head{
-                            bottom: -25px;
-                            right:1px;
-                        }
-                        
-                        .arrow-straight .arrow-head{
-                            bottom: -25px;
+            .arrow-tail, .arrow-straight-tail{
+                background: blue !important;
+                height: 13px;
+                width: 5px;
+                position: absolute;
+                bottom: -8px;
+            }
+            
+            .arrow-head{
+                position: absolute;
+                right: 2px;                            
+                height: 34px;
+                width: 10px;
+                overflow: hidden;
+            }
+            
+            .arrow-head div{
+                height: 15px;
+                width: 15px;
+                position: absolute;
+                border: 3px solid blue !important;
+                right: 4px;
+                transform: rotate(45deg);
+                top: 0px;
+            }
+            
+            .arrow-reverse .arrow-tail{
+                bottom: none;
+                top:-8px;
+            }
+            
+            .arrow .arrow-head{
+                top: -12px;
+            }
+            
+            .arrow-reverse .arrow-head{
+                bottom: -25px;
+                right:1px;
+            }
+            
+            .arrow-straight .arrow-head{
+                bottom: -25px;
                             right:-1px;
-                        }
-                        
-                        .arrow .arrow-straight-tail, .arrow-reverse .arrow-straight-tail{
-                            display: none;
-                        }
+            }
+            
+            .arrow .arrow-straight-tail, .arrow-reverse .arrow-straight-tail{
+                display: none;
+            }
 
 			.arrow, .arrow-reverse, .arrow-straight {
 				cursor: default;
@@ -142,17 +140,21 @@
 				border-color: #ED1C24 !important;
 			}
                         
-                        .arrow.highlight-node .arrow-tail, .arrow-reverse.highlight-node .arrow-tail, .arrow-straight.highlight-node .arrow-straight-tail{
+            .arrow.highlight-node .arrow-tail, 
+            .arrow-reverse.highlight-node .arrow-tail, 
+            .arrow-straight.highlight-node .arrow-straight-tail{
 				background: #ED1C24 !important;
 			}
                         
-                        .arrow > div, .arrow > div:nth-child(2) > div,
-                        .arrow-reverse > div, .arrow-reverse > div:nth-child(2) > div,
-                        .arrow-straight > div{
-                            position:absolute;
-                        }
+            .arrow > div, 
+            .arrow > div:nth-child(2) > div,
+            .arrow-reverse > div, 
+            .arrow-reverse > div:nth-child(2) > div,
+            .arrow-straight > div{
+                position:absolute;
+            }
 
-                        .arrow > div:nth-child(1){				
+            .arrow > div:nth-child(1){				
 				border-bottom: 3px solid blue;
 				/* border-right: 3px solid blue; */
 				bottom: 0px;
@@ -162,26 +164,26 @@
 				border-bottom-right-radius: 6px;
 			}
                         
-                        .arrow > div:nth-child(2),
-                        .arrow-reverse > div:nth-child(2){
-                            top:0;
-                            bottom: 0;
-                            left:calc(40% - 6px);
-                            width: 12px;
-                        }
+            .arrow > div:nth-child(2),
+            .arrow-reverse > div:nth-child(2){
+                top:0;
+                bottom: 0;
+                left:calc(40% - 6px);
+                width: 12px;
+            }
 
-                        .arrow > div:nth-child(2) > div:nth-child(1){
-                            border-top: 3px solid blue;
-                            border-left: 3px solid blue;
-                            top:0;
-                            /* bottom: 0px; */				
-                            right: -3px;				
-                            width: 6px;				
-                            height: 60%;
-                            border-top-left-radius: 6px;
-                        }
+            .arrow > div:nth-child(2) > div:nth-child(1) {
+                border-top: 3px solid blue;
+                border-left: 3px solid blue;
+                top:0;
+                /* bottom: 0px; */				
+                right: -3px;				
+                width: 6px;				
+                height: 60%;
+                border-top-left-radius: 6px;
+            }
                         
-			.arrow > div:nth-child(2) > div:nth-child(2){
+			.arrow > div:nth-child(2) > div:nth-child(2) {
 				border-bottom: 3px solid blue;
 				border-right: 3px solid blue;
 				bottom: 0;
@@ -192,16 +194,16 @@
 				border-bottom-right-radius: 6px;
 			}
                         
-                        .arrow-reverse > div:nth-child(2) > div:nth-child(1){
-                            border-bottom: 3px solid blue;
-                            border-left: 3px solid blue;
-                            /* top:0; */
-                            bottom: 0px;				
-                            right: -3px;				
-                            width: 6px;				
-                            height: 60%;
-                            border-bottom-left-radius: 6px;
-                        }
+            .arrow-reverse > div:nth-child(2) > div:nth-child(1){
+                border-bottom: 3px solid blue;
+                border-left: 3px solid blue;
+                /* top:0; */
+                bottom: 0px;				
+                right: -3px;				
+                width: 6px;				
+                height: 60%;
+                border-bottom-left-radius: 6px;
+            }
                         
 			.arrow-reverse > div:nth-child(2) > div:nth-child(2){
 				border-top: 3px solid blue;
@@ -214,7 +216,7 @@
 				border-top-right-radius: 6px;
 			}
                         
-                        .arrow > div:nth-child(3){
+            .arrow > div:nth-child(3){
 				border-top: 3px solid blue;
 				/* border-left: 3px solid blue; */
 				top:0;
@@ -368,11 +370,10 @@
 				padding: 5px 10px;
 				cursor: pointer;
 			}
-			button:hover {
-				/* background-color: rgba(0,255,255,0.5); */
-
-				/*color: #fff;*/
-}
+/*button:hover {
+    background-color: rgba(0,255,255,0.5);
+    color: #fff;
+}*/
 			button:active {
 				color: #000000;
 				/* background-color: rgba(0,255,255,0.75); */
@@ -476,9 +477,9 @@ div#chartDetail {
     border-bottom-right-radius: 10px;
 }
 
-.card-holder {
-    /* padding: 0 0 20px 0; */
-}
+/*.card-holder {
+     padding: 0 0 20px 0; 
+}*/
 
 .customise-tool button:nth-child(3) {
     right: 35px;

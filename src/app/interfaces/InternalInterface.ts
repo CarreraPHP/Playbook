@@ -5,6 +5,6 @@ export interface InternalInterface {
 	top: number;
 	linkLeft: string; //Used for relative reference, can be 'start' or any other existing card horizontally before it.
 	linkTop: string; //Used for relative reference, can be 'start' or any other existing card vertically before it.
-	height:number;
-	width:number;
+	height: number;
+	width: number;
 }

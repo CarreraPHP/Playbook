@@ -1389,7 +1389,8 @@ div#chartscene {
 }
 
 #chartcanvas > #chartscene > div, 
-pb-viewport > #chartscene > pb-card {
+pb-viewport > #chartscene > pb-card,
+pb-viewport > #chartscene > pb-arrow {
     position: absolute;
     -moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
     -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;

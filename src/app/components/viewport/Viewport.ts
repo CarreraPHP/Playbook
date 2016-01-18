@@ -1,18 +1,21 @@
 import {
 Component, Input,
-OnInit, OnDestroy, OnChanges, SimpleChange
+OnInit, OnDestroy, OnChanges, SimpleChange, ChangeDetectorRef, ChangeDetectionStrategy
 } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { Card } from '../card/Card';
+import { Arrow } from '../arrow/Arrow';
 import { ChartService } from '../../services/ChartService';
 import { CardService } from '../../services/CardService';
+import { OptionService } from '../../services/OptionService';
 import { OptionInterface } from '../../interfaces/OptionInterface'
 
 @Component({
 	selector: 'pb-viewport',
 	templateUrl: 'app/components/viewport/Viewport.html',
-	directives: [Card, CORE_DIRECTIVES],
+	directives: [Card, Arrow, CORE_DIRECTIVES],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [ChartService]
 })
 
@@ -23,7 +26,7 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 	private _showAdmin = false;
 	private _showView = true; // Display Preview
 	
-	constructor(private chartService: ChartService) {
+	constructor(private chartService: ChartService, private changeDetector: ChangeDetectorRef) {
 		// debugger;
 		// chartService.add();
 		this.items = chartService.getAll();
@@ -44,7 +47,7 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 	 * used for determining whether to enable admin view or display view
 	 */
 	@Input('is-admin') set isAdmin(value: boolean) {
-		console.log("Admin value is ", value);
+		// console.log("Admin value is ", value);
 		this._showAdmin = value;
 		this._showView = !value;
 	}
@@ -65,8 +68,89 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 			} else if ("start" === item.internal.linkTop) {
 				item.internal.top = 0;
 			}
-			// console.log("viewport listening", refLeft, refTop, item.id, item.internal);
 		});
+        
+        // Handle the options array in here. There are 2 possible scenarios.
+        // 1. Options within the item itself which we can handle outside too
+        // 2. Options that reference the current item.
+            
+        let el = $event.el,
+            elRect = $event.rect,
+            item:CardService = $event.item;
+            
+        $event.item.options.forEach((option: OptionService, ok) => {
+            let optEl = el.querySelector('#' + option.id),
+                optElRect = optEl.getBoundingClientRect(),
+                topDiff:number = 0;
+            
+            // Steps to calculate the postion of the option :
+            // 1. Get the difference between the card top and options top to get the position within the card.
+            // 2. Add that with the (height/2 - 4px) of the option, so that the 8px base of the arrow will be in center.
+            // 3. Left is same as the right-side end of the card, which is card's (left+width)
+            
+            option.internal.top = (optElRect.top - elRect.top) + (optElRect.height/2 -4);
+            option.internal.left = elRect.left + elRect.width;
+            option.internal.height = ChartService.CARD_GAP;
+            option.internal.width = ChartService.CARD_GAP;
+            
+            console.group("%cArrow Dymistified", "color:red");
+                console.group("%cCard", "color:blue");            
+                    console.log("Option Node El : ", el);
+                    console.log("Option Node El Rect : ", elRect);
+                console.groupEnd();
+                console.group("%cOption Node within the card", "color:green");            
+                    console.log("Option Node El : ", optEl);
+                    console.log("Option Node El Rect : ", optElRect);
+                console.groupEnd();
+                console.group("%cArrow", "color:Orange");            
+                    // console.log("Option Node El : ", );
+                    console.log("Option Node El Rect : ", option.internal);
+                console.groupEnd();
+            console.groupEnd();
+            
+            // 4. Decide whether the arrow should be normal, inverted or straight by using the top values of both item and reference.
+            
+            this.items.forEach((referredItem: CardService, ik) => {
+                if (option.reference == referredItem.id) {
+                    option.internal.width = referredItem.internal.left - option.internal.left;
+                    
+                    if(referredItem.internal.top > option.internal.top) {
+                        option.internal.height = referredItem.internal.top - option.internal.top - (referredItem.internal.height/2 - 1.5);
+                    } else {
+                        option.internal.height = option.internal.top - referredItem.internal.top + (referredItem.internal.height/2 - 1.5);
+                    }
+                    
+                    topDiff = option.internal.top - (referredItem.internal.top + option.internal.height);
+                    
+                    console.group("Top Diff Value : ")            
+                    console.log("Top Diff : ", topDiff);
+                    console.groupEnd();
+                    
+                    if((topDiff <= 8) && (topDiff >= -7)) {
+                        option.internal.classes["arrow-reverse"] = false;
+                        option.internal.classes["arrow-straight"] = true;
+                        option.internal.classes["arrow"] = false;
+                    } else if(topDiff < -7) {
+                        option.internal.classes["arrow-reverse"] = true;
+                        option.internal.classes["arrow-straight"] = false;
+                        option.internal.classes["arrow"] = false;
+                    } else {
+                        option.internal.classes["arrow-reverse"] = false;
+                        option.internal.classes["arrow-straight"] = false;
+                        option.internal.classes["arrow"] = true;
+                    }
+                }
+            });
+            
+            this.changeDetector.markForCheck();
+            
+            // console.group("Before handling Options in Viewport : ")            
+            // console.log("Item Rect : ", elRect);
+            // console.log("Option El Rect : ", optElRect);
+            // console.log("Item : ", item);
+            // console.log("Option : ", option);
+            // console.groupEnd();
+        });
 	}
 	
 	/**
@@ -78,7 +162,7 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 	 * This is need because we have increased the size of the card and therby reduced the space below it. this needs to fixed.
 	 */
 	onCardAction($event) {
-		console.log("card action", $event);
+		// console.log("card action", $event);
 		if($event.event === "add") {
 			let rowStart:string = this.chartService.getRowStartCard($event.item),
 				card = this.chartService.generateCard("", "card description", rowStart, this.chartService.getColumnStartCard($event.item, rowStart)),

@@ -1,7 +1,7 @@
 import {
 Component, Input, Output, HostListener, EventEmitter, HostBinding,
 OnInit, AfterViewInit, AfterContentInit, AfterViewChecked, AfterContentChecked, ElementRef,
-OnChanges, SimpleChange
+OnChanges, SimpleChange, ChangeDetectionStrategy, ChangeDetectorRef
 } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { ChartService } from '../../services/ChartService';
@@ -10,8 +10,11 @@ import { InternalService } from '../../services/InternalService';
 import { ActorService } from '../../services/ActorService';
 import { OptionService } from '../../services/OptionService';
 
+// changeDetection: ChangeDetectionStrategy.OnPush,
+
 @Component({
 	selector: 'pb-card',
+    
 	templateUrl: 'app/components/card/Card.html',
 	styles: [`
 		.card-overlay{
@@ -53,7 +56,7 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	private _internal:InternalService;
 	private enableEditor: boolean = false; // flag for when to editor screen
 
-	constructor(private elRef: ElementRef, private chartService:ChartService) {
+	constructor(private elRef: ElementRef, private chartService:ChartService, private changeDetector:ChangeDetectorRef) {
 
 	}
 
@@ -62,12 +65,12 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	}
 
 	ngOnChanges(changes: { [key: string]: SimpleChange }) {
-		console.log("data assigned : ", changes);
+		console.log("%cdata assigned : ", "color:green;font-size:18px", changes);
 		this._internal = changes['item'].currentValue.internal;
 	}
 
 	ngAfterViewInit() {
-		console.log("View Init : ", this.elRef.nativeElement, arguments);
+		// console.log("View Init : ", this.elRef.nativeElement, arguments);
 		this.emitBoundedRect();
 	}
 
@@ -96,8 +99,11 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	emitBoundedRect() {
 		let el = this.elRef.nativeElement,
 			elRect = el.getBoundingClientRect();
+            
+        // console.group("Before Emit in Card : ")            
 		// console.log("Emit Bounded Recr : ", elRect.height, elRect.left, elRect.top);
-		
+        // console.groupEnd();
+        
 		this.item.internal.width = elRect.width;
 		this.item.internal.height = elRect.height;
 		
@@ -140,7 +146,14 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 	 */
 	addOption() {
 		this.emitCardRefresh("add", this.item);
+        // this.changeDetector.markForCheck();
 	}
+    
+    @HostBinding('style.left') get left() {
+        console.log("%cdata assigned : ", "color:red;font-size:18px", arguments);
+        // this.emitBoundedRect();
+        return this.item.internal.left; 
+    }
 
 	@HostListener('click', ['$event']) OnHostClick(event) {
 		// console.log("tiggered when click is made", arguments);

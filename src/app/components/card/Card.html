@@ -2,20 +2,20 @@
     <!--<template  [style.height.px]="editorHeight" [style.width.px]="editorWidth" >-->
         <div *ngIf="!!enableEditor || !!enableEditor" class="card-overlay">
             <div class="card-button-list">
-                <button class="card-button" (click)="addOption()">
+                <button class="card-button" (click)="addOption()" *ngIf="item.type != 'End'">
                     <i class="icon-add-option"></i>
                 </button>
-                <button class="card-button">
+                <button class="card-button" *ngIf="item.type == 'Actor'">
                     <i class="icon-add-actor"></i>
                 </button>
                 <button class="card-button">
                     <i class="icon-config "></i>
                 </button>
                 <button class="card-button">
-                    <i class="icon-trash "></i>
-                </button>
-                <button class="card-button">
                     <i class="icon-edit "></i>
+                </button>
+                <button class="card-button" *ngIf="item.options.length == 0">
+                    <i class="icon-trash "></i>
                 </button>
             </div>
         </div>

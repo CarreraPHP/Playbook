@@ -1,15 +1,14 @@
 import {Injectable} from 'angular2/core';
-import { InternalInterface } from '../interfaces/InternalInterface';
+import { OptionInternalInterface } from '../interfaces/OptionInternalInterface';
 
 @Injectable()
-export class InternalService implements InternalInterface {
+export class OptionInternalService implements OptionInternalInterface {
 
 	constructor(public classes:Object, public styles:string, 
 				public left:number, public top:number, 
-				public linkLeft:string, public linkTop:string,
 				public height?:number, public width?:number) {
-		if(!("card" in this.classes)) {
-			this.classes['card'] = true;
+		if(!("arrow" in this.classes)) {
+			this.classes['arrow'] = true;
 		}
 		
 		//height & width are used for reference purpose and not actually taken into consideration.

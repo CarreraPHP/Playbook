@@ -7,7 +7,7 @@ import { InternalInterface } from '../interfaces/InternalInterface';
 @Injectable()
 export class CardService implements CardInterface {
 	
-	constructor(public id:string, public name:string,	public description:string, public type: string, public internal: InternalInterface, public options: OptionInterface[], public actors: ActorInterface[]) { 
+	constructor(public id:string, public name:string, public description:string, public type: string, public internal: InternalInterface, public options: OptionInterface[], public actors: ActorInterface[]) { 
 		
 	}
 
