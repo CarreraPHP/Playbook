@@ -1,5 +1,5 @@
 import {
-Component, Input,
+Component, Input, ElementRef, Query, QueryList,
 OnInit, OnDestroy, OnChanges, SimpleChange, ChangeDetectorRef, ChangeDetectionStrategy
 } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
@@ -26,7 +26,7 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 	private _showAdmin = false;
 	private _showView = true; // Display Preview
 	
-	constructor(private chartService: ChartService, private changeDetector: ChangeDetectorRef) {
+	constructor(private elementRef:ElementRef, private chartService: ChartService, private changeDetector: ChangeDetectorRef) {
 		// debugger;
 		// chartService.add();
 		this.items = chartService.getAll();
@@ -70,15 +70,25 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 			}
 		});
         
+	}
+    
+    onArrowInitialised($event: any) {
+        console.group("%cArrow", "color:red;font-size:22px;");            
+            console.log("Option Node El : ", $event);
+            console.log("Option Node El Rect : ", this.elementRef);
+        console.groupEnd();
+        
+        
         // Handle the options array in here. There are 2 possible scenarios.
         // 1. Options within the item itself which we can handle outside too
         // 2. Options that reference the current item.
             
-        let el = $event.el,
-            elRect = $event.rect,
-            item:CardService = $event.item;
+        let item:CardService = $event.item,
+            vport = this.elementRef.nativeElement,
+            el = vport.querySelector('#' + item.id),
+            elRect = el.getBoundingClientRect();
             
-        $event.item.options.forEach((option: OptionService, ok) => {
+        item.options.forEach((option: OptionService, ok) => {
             let optEl = el.querySelector('#' + option.id),
                 optElRect = optEl.getBoundingClientRect(),
                 topDiff:number = 0;
@@ -112,6 +122,9 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
             
             this.items.forEach((referredItem: CardService, ik) => {
                 if (option.reference == referredItem.id) {
+                    let refEl = vport.querySelector('#' + option.reference),
+                        refElRect = refEl.getBoundingClientRect();
+                        
                     option.internal.width = referredItem.internal.left - option.internal.left;
                     
                     if(referredItem.internal.top > option.internal.top) {
@@ -124,6 +137,8 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
                     
                     console.group("Top Diff Value : ")            
                     console.log("Top Diff : ", topDiff);
+                    console.log("Ref Rect : ", refEl, refElRect);
+                    console.log("option internal : ", option.internal);
                     console.groupEnd();
                     
                     if((topDiff <= 8) && (topDiff >= -7)) {
@@ -151,7 +166,7 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
             // console.log("Option : ", option);
             // console.groupEnd();
         });
-	}
+    }
 	
 	/**
 	 * When a card action for "add" is triggered. When start by get the start card of the previous column for linkLeft.

@@ -6,7 +6,8 @@
 </div>
 <div id="chartscene">
     <template ngFor #item [ngForOf]="items">
-        <pb-card 
+        <pb-card
+            [attr.id]="item.id" 
             [card-item]="item" 
             [style.left.px]="item.internal.left" 
             [style.top.px]="item.internal.top"
@@ -16,13 +17,15 @@
         </pb-card>
         <template ngFor #option [ngForOf]="item.options">
             <pb-arrow
+                [attr.id]="option.id + 'arrow'" 
                 [ngClass]="option.internal.classes" 
                 [style.left.px]="option.internal.left" 
                 [style.top.px]="option.internal.top"
                 [style.height.px]="option.internal.height" 
                 [style.width.px]="option.internal.width"
                 [card-item]="item" 
-                [arrow-item]="option">
+                [arrow-item]="option"
+                (arrowInitialised)="onArrowInitialised($event)">
             </pb-arrow>
         </template>
     </template>

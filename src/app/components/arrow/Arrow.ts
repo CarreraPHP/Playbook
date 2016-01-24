@@ -15,7 +15,7 @@ import { OptionService } from '../../services/OptionService';
 export class Arrow implements OnInit, AfterViewInit, AfterContentInit {
     @Input('card-item') item: CardService;
     @Input('arrow-item') option: OptionService;
-    @Output('rectAvailable') boundedRect: EventEmitter<any> = new EventEmitter();
+    @Output('arrowInitialised') boundedRect: EventEmitter<any> = new EventEmitter();
     
     constructor(private elRef: ElementRef, private chartService:ChartService, private changeDetector:ChangeDetectorRef) {
         
@@ -31,20 +31,13 @@ export class Arrow implements OnInit, AfterViewInit, AfterContentInit {
     }
     
 	emitBoundedRect() {
-		let el = this.elRef.nativeElement,
-			elRect = el.getBoundingClientRect();
+		let el = this.elRef.nativeElement;
 		
 		this.option.internal.width = ChartService.CARD_GAP;
 		this.option.internal.height = ChartService.CARD_GAP;
 		
 		this.boundedRect.emit({
 			event: 'init',
-			rect: {
-				height: elRect.height,
-				width: elRect.width,
-				left: elRect.left,
-				top: elRect.top
-			},
             option: this.option,
 			item: this.item,
 			el: el

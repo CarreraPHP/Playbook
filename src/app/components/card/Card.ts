@@ -149,11 +149,11 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
         // this.changeDetector.markForCheck();
 	}
     
-    @HostBinding('style.left') get left() {
-        console.log("%cdata assigned : ", "color:red;font-size:18px", arguments);
-        // this.emitBoundedRect();
-        return this.item.internal.left; 
-    }
+    // @HostBinding('style.left') get left() {
+    //     console.log("%cdata assigned : ", "color:red;font-size:18px", arguments);
+    //     // this.emitBoundedRect();
+    //     return this.item.internal.left; 
+    // }
 
 	@HostListener('click', ['$event']) OnHostClick(event) {
 		// console.log("tiggered when click is made", arguments);
