@@ -26,7 +26,10 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 	private _showAdmin = false;
 	private _showView = true; // Display Preview
 	
-	constructor(private elementRef:ElementRef, private chartService: ChartService, private changeDetector: ChangeDetectorRef) {
+	constructor(
+        private elementRef:ElementRef, 
+        private chartService: ChartService, 
+        private changeDetector: ChangeDetectorRef) {
 		// debugger;
 		// chartService.add();
 		this.items = chartService.getAll();
@@ -73,6 +76,18 @@ export class Viewport implements OnInit, OnDestroy, OnChanges {
 	}
     
     onArrowInitialised($event: any) {
+        console.log("%c" + $event.event, "color:red;font-size:42px;");
+        if($event.event === "reference") {
+            this.items.forEach((referredItem: CardService, ik) => {
+                if ($event.option.reference == referredItem.id) {
+                    $event.arrow.referencedItem = referredItem;
+                }
+            });
+            console.log("%ccheck if this got executed", "color:red;font-size:42px;");
+            return;
+        }
+        
+        
         console.group("%cArrow", "color:red;font-size:22px;");            
             console.log("Option Node El : ", $event);
             console.log("Option Node El Rect : ", this.elementRef);
