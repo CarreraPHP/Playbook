@@ -107,17 +107,20 @@ export class Card implements OnInit, AfterViewInit, AfterContentInit {
 		this.item.internal.width = elRect.width;
 		this.item.internal.height = elRect.height;
 		
-		this.boundedRect.emit({
-			event: 'init',
-			rect: {
-				height: elRect.height,
-				width: elRect.width,
-				left: elRect.left,
-				top: elRect.top
-			},
-			item: this.item,
-			el: el
-		});
+        setTimeout(() => {
+            this.boundedRect.emit({
+                event: 'init',
+                rect: {
+                    height: elRect.height,
+                    width: elRect.width,
+                    left: elRect.left,
+                    top: elRect.top
+                },
+                item: this.item,
+                el: el
+            });
+        }, 1500);
+		
 	}
 	
 	emitCardRefresh(type?:string, item?:any) {
